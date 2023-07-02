@@ -1,0 +1,82 @@
+<template>
+    <lightning-card>
+         
+	<div class="slds-align_absolute-center slds-text-heading_medium" style="height:4rem">
+		<p><strong>Tax Invoice</strong></p>
+	</div>
+    <div class="slds-p-horizontal_large">
+	<div class="slds-grid slds-gutters">
+		<div class="slds-col">
+			<span>
+    <lightning-input type="text" variant="standard" name="Party" label="Party" ></lightning-input>
+</span>
+		</div>
+		<div class="slds-col">
+			<span>
+    <div class="slds-grid slds-gutters">
+<div class="slds-col">
+<span> 
+    <lightning-input type="text" variant="standard" name="Invoice Number" label="Invoice Number" ></lightning-input>
+</span>
+		</div>
+		<div class="slds-col">
+			<span>
+    <lightning-input type="date" variant="standard" name="Invoice Date" label="Invoice Date" ></lightning-input>
+</span>
+		</div>
+	</div>
+	</span>
+	</div>
+	</div>
+	<div class="slds-grid slds-gutters">
+		<div class="slds-col">
+			<span>
+    <lightning-input type="tel" variant="standard" name="Phone" label="Phone" ></lightning-input>
+</span>
+		</div>
+		<div class="slds-col">
+			<span>
+    <lightning-input type="email" variant="standard" name="Email" label="Email" ></lightning-input>
+</span>
+		</div>
+	</div>
+	<div class="slds-grid slds-gutters">
+		<div class="slds-col">
+			<span>
+    <lightning-input type="text" variant="standard" name="State" label="State" ></lightning-input>
+</span>
+		</div>
+		<div class="slds-col">
+			<span>
+    <lightning-input type="text" variant="standard" name="District" label="District" ></lightning-input>
+</span>
+		</div>
+	</div>
+	<div class="slds-grid slds-gutters">
+		<div class="slds-col">
+			<span>
+    <lightning-input type="text" variant="standard" name="Village" label="Village" ></lightning-input>
+</span>
+		</div>
+		<div class="slds-col">
+			<span>
+    <lightning-input type="text" variant="standard" name="Block" label="Block" ></lightning-input>
+</span>
+		</div>
+		<div class="slds-col">
+			<span>
+    <lightning-input type="text" variant="standard" name="Tehsil" label="Tehsil" ></lightning-input>
+</span>
+		</div>
+	</div>
+<div class="slds-align_absolute-center">
+    <span class="slds-m-around_small">
+        <lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={handleClick}></lightning-button>
+    </span>
+    <span class="slds-m-around_small">
+        <lightning-button variant="brand" label="Save" title="Save" onclick={handleClick}></lightning-button>
+    </span>
+</div>
+</div>
+</lightning-card>
+</template>
