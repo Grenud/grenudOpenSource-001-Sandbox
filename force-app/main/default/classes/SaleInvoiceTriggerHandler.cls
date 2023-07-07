@@ -2,31 +2,65 @@ public class SaleInvoiceTriggerHandler
 {
     Public static void updateTotalInvRollupsum(List<Sale_Invoice__c>FCList){
         Set<string>ClientFarmerId=new Set<String>();
+        map<Id, String>CfIdFatherMap=new map<Id, String>();
+        map<Id, String>CfIdAadharMap=new map<Id, String>();
+        map<Id, String>CfIdPhoneMap=new map<Id, String>();
+        map<Id, String>CfIdVillageMap=new map<Id, String>();
+        map<Id, String>CfIdDistrictMap=new map<Id, String>();
+        map<Id, String>CfIdBlockMap=new map<Id, String>();
         for(Sale_Invoice__c SI:FCList){
-            if(SI.Client_farmer__c!=null){
-                ClientFarmerId.add(SI.Client_farmer__c);
-                
+                if(SI.Client_farmer__c!=null){
+              ClientFarmerId.add(SI.Client_farmer__c);  
+                if(SI.Father_Name__c!=null){
+                    CfIdFatherMap.put(SI.Client_farmer__c,SI.Father_Name__c);
+                }
+                if(SI.Adhaar_Card_No__c!=null){
+                    CfIdAadharMap.put(SI.Client_farmer__c,SI.Adhaar_Card_No__c);
+                }
+                if(SI.Village__c!=null){
+                    CfIdVillageMap.put(SI.Client_farmer__c,SI.Village__c);
+                }
+                if(SI.Block__c!=null){
+                    CfIdBlockMap.put(SI.Client_farmer__c,SI.Block__c);
+                }
+                if(SI.District__c!=null){
+                    CfIdDistrictMap.put(SI.Client_farmer__c,SI.District__c);
+                }
+                if(SI.Phone__c!=null){
+                    CfIdPhoneMap.put(SI.Client_farmer__c,SI.Phone__c);
+                }
             }
+               
         }
         map<Id,Integer>AccountTotalKitAreaMap=new map<Id,Integer>();
         map<Id,Integer>AccountTotalKitPlotsMap=new map<Id,Integer>();
         Map<Id, Decimal> accountTotalCreditMap = new Map<Id, Decimal>();
         Map<Id, integer> accountInvoiceCount = new Map<Id, integer>();
-        List<Account> accountsToUpdate = [SELECT Id,Total_Invoice_Value__c ,Total_Kit_Area__c,Total_Plot__c FROM Account WHERE Id IN :ClientFarmerId];
+      
+        List<Account> accountsToUpdate = [SELECT Id,Total_Invoice_Value__c ,Total_Kit_Area__c,Total_Plot__c, Father_Name__c,Aadhar_Card_No__c,Village__c,Block__c,District__c,Phone FROM Account WHERE Id IN :ClientFarmerId];
         list<Account>CFList=[Select Id, (SELECT Total_Invoice_Value__c,Kit_Area__c,Kit_Plots__c FROM Sale_Invoices1__r) from Account where id in:ClientFarmerId];
-
+           
         for (Account acc : accountsToUpdate) {
             accountTotalCreditMap.put(acc.Id, 0);
             accountInvoiceCount.put(acc.Id,0);
             AccountTotalKitAreaMap.put(acc.Id,0);
             AccountTotalKitPlotsMap.put(acc.Id,0);
         }
-        
+         system.debug(AccountTotalKitAreaMap.size() + 'AccountTotalKitPlotsMap.size' + AccountTotalKitPlotsMap.size());
         for (Sale_Invoice__c CF : [SELECT Client_farmer__c, Total_Invoice_Value__c,Kit_Area__c,Kit_Plots__c FROM Sale_Invoice__c WHERE Client_farmer__c IN :ClientFarmerId]) {
             accountTotalCreditMap.put(CF.Client_farmer__c, accountTotalCreditMap.get(CF.Client_farmer__c) + CF.Total_Invoice_Value__c);
             accountInvoiceCount.put(CF.Client_farmer__c, accountInvoiceCount.get(CF.Client_farmer__c) + 1);
-             AccountTotalKitAreaMap.put(CF.Client_farmer__c,AccountTotalKitAreaMap.get(CF.Client_farmer__c) + Integer.valueof(CF.Kit_Area__c));
-             AccountTotalKitPlotsMap.put(CF.Client_farmer__c,AccountTotalKitPlotsMap.get(CF.Client_farmer__c) + Integer.valueof(CF.Kit_Plots__c));
+            
+            integer KitArea=0;
+            if(CF.Kit_Area__c!=null){
+                KitArea=Integer.valueof(CF.Kit_Area__c);
+            }
+            Integer KitPlot=0;
+            if(CF.Kit_Plots__c!=null){
+                KitPlot=Integer.valueof(CF.Kit_Plots__c);
+            }
+            AccountTotalKitAreaMap.put(CF.Client_farmer__c,AccountTotalKitAreaMap.get(CF.Client_farmer__c) + KitArea);
+            AccountTotalKitPlotsMap.put(CF.Client_farmer__c,AccountTotalKitPlotsMap.get(CF.Client_farmer__c) + KitPlot);
         }
         List<Account> accountsToUpdateWithRollup = new List<Account>();
         for (Account acc : accountsToUpdate) {
@@ -35,6 +69,26 @@ public class SaleInvoiceTriggerHandler
             acc.Total_Sale_Invoice_Count__c=accountInvoiceCount.get(acc.Id);
             acc.Total_Kit_Area__c=AccountTotalKitAreaMap.get(acc.Id);
             acc.Total_Plot__c=AccountTotalKitPlotsMap.get(acc.Id);
+             if(acc.Aadhar_Card_No__c!=CfIdAadharMap.get(acc.id) && CfIdAadharMap.get(acc.id)!=null){
+               acc.Aadhar_Card_No__c= CfIdAadharMap.get(acc.id);
+            }
+            if(acc.Block__c!=CfIdBlockMap.get(acc.id) && CfIdBlockMap.get(acc.id)!=null){
+               acc.Block__c= CfIdBlockMap.get(acc.id);
+            }
+            if(acc.District__c!=CfIdDistrictMap.get(acc.id) && CfIdDistrictMap.get(acc.id)!=null){
+               acc.District__c= CfIdDistrictMap.get(acc.id);
+            }
+             system.debug(acc.Father_Name__c +'AND'+CfIdFatherMap.get(acc.id));
+            if(acc.Father_Name__c!=CfIdFatherMap.get(acc.id)&& CfIdFatherMap.get(acc.id)!=null){
+               
+               acc.Father_Name__c= CfIdFatherMap.get(acc.id);
+            }
+            if(acc.Phone!=CfIdPhoneMap.get(acc.id)&& CfIdPhoneMap.get(acc.id)!=null){
+               acc.Phone= CfIdPhoneMap.get(acc.id);
+            }
+            if(acc.Village__c!=CfIdVillageMap.get(acc.id)&& CfIdVillageMap.get(acc.id)!=null){
+               acc.Village__c= CfIdVillageMap.get(acc.id);
+            }
             accountsToUpdateWithRollup.add(acc);
         }
         
@@ -45,8 +99,35 @@ public class SaleInvoiceTriggerHandler
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Public static void UpdateReparentTotalInvRollUpSum(list<Sale_Invoice__c>OldList, List<Sale_Invoice__c>NewList, map<id,Sale_Invoice__c>SIoldmap){
         Set<string>ClientFarmerId=new Set<String>();
+        map<Id, String>CfIdFatherMap=new map<Id, String>();
+        map<Id, String>CfIdAadharMap=new map<Id, String>();
+        map<Id, String>CfIdPhoneMap=new map<Id, String>();
+        map<Id, String>CfIdVillageMap=new map<Id, String>();
+        map<Id, String>CfIdDistrictMap=new map<Id, String>();
+        map<Id, String>CfIdBlockMap=new map<Id, String>();
         for(Sale_Invoice__c SI:NewList){
-            ClientFarmerId.add(SI.Client_farmer__c);
+            if(SI.Client_farmer__c!=null){
+              ClientFarmerId.add(SI.Client_farmer__c);  
+                if(SI.Father_Name__c!=null){
+                    CfIdFatherMap.put(SI.Client_farmer__c,SI.Father_Name__c);
+                }
+                if(SI.Adhaar_Card_No__c!=null){
+                    CfIdAadharMap.put(SI.Client_farmer__c,SI.Adhaar_Card_No__c);
+                }
+                if(SI.Village__c!=null){
+                    CfIdVillageMap.put(SI.Client_farmer__c,SI.Village__c);
+                }
+                if(SI.Block__c!=null){
+                    CfIdBlockMap.put(SI.Client_farmer__c,SI.Block__c);
+                }
+                if(SI.District__c!=null){
+                    CfIdDistrictMap.put(SI.Client_farmer__c,SI.District__c);
+                }
+                if(SI.Phone__c!=null){
+                    CfIdPhoneMap.put(SI.Client_farmer__c,SI.Phone__c);
+                }
+            }
+            
             if(SI.Client_farmer__c!= SIoldmap.get(SI.id).Client_farmer__c){
                 //ClientFarmerId.add(SI.Client_farmer__c);
                 if(SIoldmap.get(SI.id).Client_farmer__c!=null){
@@ -61,11 +142,13 @@ public class SaleInvoiceTriggerHandler
         map<Id,Integer>AccountTotalPlotMap=new map<Id,Integer>();
         Map<Id, Decimal> accountTotalInvoiceMap = new Map<Id, Decimal>();
         Map<Id, integer> accountInvoiceCount = new Map<Id, integer>();
-        List<Account> accountsToUpdate = [SELECT Id FROM Account WHERE Id IN :ClientFarmerId];
+            
+        List<Account> accountsToUpdate = [SELECT Id, Father_Name__c,Aadhar_Card_No__c,Village__c,Block__c,District__c,Phone FROM Account WHERE Id IN :ClientFarmerId];
         list<Account>CFList=[Select Id, (SELECT Total_Invoice_Value__c,Kit_Area__c,Kit_Plots__c FROM Sale_Invoices1__r) from Account where id in:ClientFarmerId];
-        
+        Map<Id, Account>CfIdMap= new map<id, Account>();
         if(accountsToUpdate.size()>0){
           for (Account acc : accountsToUpdate) {
+              CfIdMap.put(acc.id, acc);
             accountTotalInvoiceMap.put(acc.Id, 0);
             accountInvoiceCount.put(acc.Id,0);
             AccountTotalKitAreaMap.put(acc.Id,0);
@@ -74,12 +157,10 @@ public class SaleInvoiceTriggerHandler
         }
         
         for (Sale_Invoice__c invoice : [SELECT Client_farmer__c, Total_Invoice_Value__c,Kit_Area__c,Kit_Plots__c FROM Sale_Invoice__c WHERE Client_farmer__c IN :ClientFarmerId]) {
-            System.debug('invoice.Client_farmer__c'+invoice.Client_farmer__c+'accountTotalInvoiceMap.get(invoice.Client_farmer__c)@'+accountTotalInvoiceMap.get(invoice.Client_farmer__c)+'ANd invoice.Total_Invoice_Value__c'+invoice.Total_Invoice_Value__c);
             accountTotalInvoiceMap.put(invoice.Client_farmer__c, accountTotalInvoiceMap.get(invoice.Client_farmer__c) + invoice.Total_Invoice_Value__c);
             accountInvoiceCount.put(invoice.Client_farmer__c, accountInvoiceCount.get(invoice.Client_farmer__c) + 1);
             if(String.isNotEmpty(invoice.Kit_Area__c)){
-                system.debug(invoice.Client_farmer__c+'dd');
-             AccountTotalKitAreaMap.put(invoice.Client_farmer__c,AccountTotalKitAreaMap.get(invoice.Client_farmer__c) + Integer.valueof(invoice.Kit_Area__c));   
+               AccountTotalKitAreaMap.put(invoice.Client_farmer__c,AccountTotalKitAreaMap.get(invoice.Client_farmer__c) + Integer.valueof(invoice.Kit_Area__c));   
             }
             if(String.isNotEmpty(invoice.Kit_Plots__c)){
             AccountTotalPlotMap.put(invoice.Client_farmer__c,AccountTotalPlotMap.get(invoice.Client_farmer__c) + Integer.valueof(invoice.Kit_Plots__c));    
@@ -91,6 +172,26 @@ public class SaleInvoiceTriggerHandler
             acc.Total_Sale_Invoice_Count__c=accountInvoiceCount.get(acc.Id);
             acc.Total_Kit_Area__c=AccountTotalKitAreaMap.get(acc.Id);
             acc.Total_Plot__c=AccountTotalPlotMap.get(acc.Id);
+             if(acc.Aadhar_Card_No__c!=CfIdAadharMap.get(acc.id) && CfIdAadharMap.get(acc.id)!=null){
+               acc.Aadhar_Card_No__c= CfIdAadharMap.get(acc.id);
+            }
+            if(acc.Block__c!=CfIdBlockMap.get(acc.id) && CfIdBlockMap.get(acc.id)!=null){
+               acc.Block__c= CfIdBlockMap.get(acc.id);
+            }
+            if(acc.District__c!=CfIdDistrictMap.get(acc.id) && CfIdDistrictMap.get(acc.id)!=null){
+               acc.District__c= CfIdDistrictMap.get(acc.id);
+            }
+             system.debug(acc.Father_Name__c +'AND'+CfIdFatherMap.get(acc.id));
+            if(acc.Father_Name__c!=CfIdFatherMap.get(acc.id)&& CfIdFatherMap.get(acc.id)!=null){
+               
+               acc.Father_Name__c= CfIdFatherMap.get(acc.id);
+            }
+            if(acc.Phone!=CfIdPhoneMap.get(acc.id)&& CfIdPhoneMap.get(acc.id)!=null){
+               acc.Phone= CfIdPhoneMap.get(acc.id);
+            }
+            if(acc.Village__c!=CfIdVillageMap.get(acc.id)&& CfIdVillageMap.get(acc.id)!=null){
+               acc.Village__c= CfIdVillageMap.get(acc.id);
+            }
             accountsToUpdateWithRollup.add(acc);
         }
         
@@ -172,15 +273,13 @@ public class SaleInvoiceTriggerHandler
                 // Create a new Client Farmer record
                 Account newClientFarmer=new Account();
                 newClientFarmer.Farmer_Code__c=invoice.Farmer_Code__c;
-                System.debug(invoice.Party_name__c);
                     newClientFarmer.Name = invoice.Party_name__c;
                     newClientFarmer.Father_Name__c=invoice.Father_Name__c;
                     newClientFarmer.Aadhar_Card_No__c=invoice.Adhaar_Card_No__c;
                     newClientFarmer.Village__c=invoice.Village__c;
                     newClientFarmer.Block__c=invoice.Block__c;
                     newClientFarmer.District__c=invoice.District__c;
-                  //////////////////////////////////////
-                newClientFarmer.Phone = invoice.Phone__c;    
+                    newClientFarmer.Phone = invoice.Phone__c;    
                 //ClientFarmerList.add(newClientFarmer);
                 FarmercodewiseClientMap.put(invoice.Farmer_Code__c,newClientFarmer);
                 // Update the lookup field on the SaleInvoice to the newly created Client Farmer record
