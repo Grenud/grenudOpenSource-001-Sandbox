@@ -47,4 +47,30 @@ public class KitScheduleHandlerTest {
             System.assertNotEquals('', fieldActivity.Name);
         }
     }  
+    
+    @IsTest
+    public static void testPreventDuplicateKitSchedule() {
+         Account Acc= new account ();
+        Acc.Name='Test Account';
+        Acc.Farmer_Code__c='FRL001';            
+            Insert Acc;
+        // Create test data
+        Farm__c farm = new Farm__c(Name = 'Farm1',Client_Farmer__c=Acc.Id);
+        insert farm;
+
+        Kit_Schedule__c existingKitSchedule = new Kit_Schedule__c(Farm_Name__c = farm.Id);
+        insert existingKitSchedule;
+
+        Kit_Schedule__c newKitSchedule = new Kit_Schedule__c(Farm_Name__c = farm.Id);
+
+        // Call the method to be tested
+        Test.startTest();
+        KitScheduleHandler.PreventDuplicateKitSchedule(new List<Kit_Schedule__c>{ newKitSchedule });
+        Test.stopTest();
+
+        // Verify error message
+        List<ApexPages.Message> messages = ApexPages.getMessages();
+        System.assertEquals(1, messages.size(), 'An error should have occurred');
+        System.assertEquals('Cannot create duplicate Kit Schedule for the Farm', messages[0].getDetail());
+    }
 }

@@ -92,4 +92,49 @@ public class AccountTriggerHandlerTest {
             System.assertNotEquals(null, farm.District__c);
         }
     }
+    
+    @IsTest
+    public static void testHandleAfterAddressUpdate() {
+        // Create test data
+        Account oldAccount = new Account(Name='Test Account',Farmer_Code__c='FRL001',Village__c = 'OldVillage', Block__c = 'OldBlock', District__c = 'OldDistrict');
+        insert oldAccount;
+        
+        Account newAccount = new Account(id=oldAccount.id, Name='Test Account',Farmer_Code__c='FRL001',Village__c = 'NewVillage', Block__c = 'NewBlock', District__c = 'NewDistrict');
+        update newAccount;
+        
+        Farm__c farm = new Farm__c(Client_Farmer__c = newAccount.Id);
+        insert farm;
+        
+        Kit_Schedule__c kitSchedule = new Kit_Schedule__c(Client_Farmer__c = newAccount.Id);
+        insert kitSchedule;
+        
+        Field_Visit__c fieldVisit = new Field_Visit__c(Client_Farmer__c = newAccount.Id);
+        insert fieldVisit;
+        
+        // Prepare test data maps
+        List<Account> newAccountList = new List<Account>{ newAccount };
+        Map<Id, Account> newAccountsMap = new Map<Id, Account>{ newAccount.Id => newAccount };
+        Map<Id, Account> oldAccountsMap = new Map<Id, Account>{ oldAccount.Id => oldAccount };
+        
+        Test.startTest();
+        // Call the method to be tested
+        AccountTriggerHandler.HandleAfterAdressUpdate(newAccountList, newAccountsMap, oldAccountsMap);
+        Test.stopTest();
+        
+        // Verify the updated fields
+        Farm__c updatedFarm = [SELECT Village__c, Block__c, District__c FROM Farm__c WHERE Id = :farm.Id];
+        System.assertEquals(newAccount.Village__c, updatedFarm.Village__c);
+        System.assertEquals(newAccount.Block__c, updatedFarm.Block__c);
+        System.assertEquals(newAccount.District__c, updatedFarm.District__c);
+        
+        Kit_Schedule__c updatedKitSchedule = [SELECT Village__c, Block__c, District__c FROM Kit_Schedule__c WHERE Id = :kitSchedule.Id];
+        System.assertEquals(newAccount.Village__c, updatedKitSchedule.Village__c);
+        System.assertEquals(newAccount.Block__c, updatedKitSchedule.Block__c);
+        System.assertEquals(newAccount.District__c, updatedKitSchedule.District__c);
+        
+        Field_Visit__c updatedFieldVisit = [SELECT Village__c, Block__c FROM Field_Visit__c WHERE Id = :fieldVisit.Id];
+        System.assertEquals(newAccount.Village__c, updatedFieldVisit.Village__c);
+        System.assertEquals(newAccount.Block__c, updatedFieldVisit.Block__c);
+    }  
+    
 }
