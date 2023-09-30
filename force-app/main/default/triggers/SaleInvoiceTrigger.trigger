@@ -14,7 +14,7 @@ trigger SaleInvoiceTrigger on Sale_Invoice__c (before insert, after insert, afte
     }
     if(trigger.isAfter && trigger.IsUpdate){
         SaleInvoiceTriggerHandler.UpdateReparentTotalInvRollUpSum(trigger.old, trigger.new, trigger.oldmap);
-        SaleInvoiceTriggerHandler.createFarmerCreditupdatecashtocheque( trigger.new, trigger.oldmap);
+      //  SaleInvoiceTriggerHandler.createFarmerCreditupdatecashtocheque( trigger.new, trigger.oldmap);
     }
     if(trigger.isAfter && (Trigger.isUndelete)){
         SaleInvoiceTriggerHandler.updateTotalInvRollupsum(trigger.new);

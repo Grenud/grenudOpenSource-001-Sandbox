@@ -1,0 +1,819 @@
+<apex:page standardController="Supply_Billing__c" renderAs="pdf" >
+    <apex:variable var="serialNumber" value="1" />
+    <div style="text-align: center;"><strong>Bill of Supply</strong></div>
+    
+    
+            <div style="display: table; width: 100%; border: 1px solid #ccc;">
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;"><div ></div>
+                    <div ><strong>{!Supply_Billing__c.Bill_From__c}</strong></div>
+                        <div >{!Supply_Billing__c.Billing_Address__c}</div>
+                        <div  >MOBILE NO-9027944049,8859888835</div>
+                        <div  >GSTIN/UIN:{!Supply_Billing__c.Seller_GSTIN_UIN__c}</div>
+                        <div >State Name: {!Supply_Billing__c.Shipping_State__c}, Code : 09</div>
+                        <div >E-Mail: privatemandiyard@fortuneagromart.com</div></div>
+            <div style="display: table-cell; width: 40%; padding: 5px; border: 1px solid #ccc;">
+                <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>Printed on: <apex:outputText value=" {0,date,dd/MM/yyyy}">
+    <apex:param value="{!TODAY()}" />
+</apex:outputText>
+ </div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>Invoice No: <strong>{!FLOOR(Supply_Billing__c.Invoice_No__c)}</strong><div> &nbsp;&nbsp;</div></div></div>
+                <div><div ><div> &nbsp;&nbsp;</div>Dated: {!DAY(Supply_Billing__c.Date__c)}-{!MONTH(Supply_Billing__c.Date__c)}-{!YEAR(Supply_Billing__c.Date__c)}</div></div>
+            </div>
+        </div>
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;"><div >Consignee (Ship to)</div>
+                    <div ><strong>{!Supply_Billing__c.Ship_To__c}</strong></div>
+                    <div >{!Supply_Billing__c.Ship_To_Address__c}</div>
+                <!-- <div  >MOBILE NO-9027944049,8859888835</div> -->
+                    <div  >GSTIN/UIN: {!Supply_Billing__c.Ship_To_Buyer_GSTIN_UIN__c}</div>
+                    <div >State Name: {!Supply_Billing__c.Ship_To_State__c}, Code: {!Supply_Billing__c.State_Code__c}</div>
+                  <div ></div></div> 
+            <div style="display: table-cell; width: 40%; padding: 5px;">
+                <div style="border-bottom: 1px solid #ccc;"><div >Dispatch Doc No: {!Supply_Billing__c.Dispatch_Doc_No__c}</div></div>
+                <div style="border-bottom: 1px solid #ccc;">  <div >Dispatch Through:{!Supply_Billing__c.Dispatch_through__c}</div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div><div >Vehicle No: {!Supply_Billing__c.Vehicle_No__c}</div></div>
+       <!----         <div style="border-bottom: 1px solid #ccc;"><div >Terms of Delivery<div> &nbsp;&nbsp;</div></div></div>  -->
+            </div>
+        </div>
+                <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;">
+                     <div >Supplier (Bill To)</div>
+            <div ><strong>{!Supply_Billing__c.Bill_To__c} </strong></div>
+            <div  >{!Supply_Billing__c.Shipping_Address__c}</div>
+                <div  >GSTIN/UIN: {!Supply_Billing__c.Buyer_GSTIN_UIN__c}</div>
+            <div >State Name: {!Supply_Billing__c.Shipping_State__c}, Code: {!Supply_Billing__c.State_Code__c}</div>
+            </div>
+            <div style="display: table-cell; width: 40%; padding: 5px;">
+                <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div><div>Record No: <strong>{!Supply_Billing__c.Name}</strong></div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div> <div >Destination: {!Supply_Billing__c.Destination__c}</div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div> Purchase Order No:<strong> {!FLOOR(Supply_Billing__c.Purchase_Order_No__c)}</strong></div>
+               <!-- <div>Customer Name: <strong>{!Supply_Billing__c.Bill_To__c}</strong></div>   -->
+            </div>
+        </div>
+    </div>
+            <!--    ....................................................................-->
+            
+        
+  
+    
+        
+        <div class="grid-container slds-m-around_medium ">
+           
+           
+    <div class="grid-container slds-m-around_medium ">
+       
+        <div class="grid-row">
+            <div class="grid-cell">
+                <div style="text-align: center;"><strong>Particulars</strong></div>  
+     <table style="border-collapse: collapse; width: 100%; border: 1px solid #000;">
+        
+          <thead>
+              <tr >
+          <th style="border: 1px solid #000;text-align: center;">Sr.No.</th>
+          <th style="border: 1px solid #000;text-align: center;">Description of Goods</th>
+                  
+                  <th style="border: 1px solid #000;text-align: center;">HSN/SAC</th>
+                  <th style="border: 1px solid #000;text-align: center;">Bag</th>
+                  <th style="border: 1px solid #000;text-align: center;">Packing</th>
+                  <th style="border: 1px solid #000;text-align: center;">Quantity</th> 
+                  <th style="border: 1px solid #000;text-align: center;">Rate(INR)</th>
+                  <th style="border: 1px solid #000;text-align: center;">per</th>
+                  <th style="border: 1px solid #000;text-align: center;">Total (INR)</th>
+              </tr>
+          </thead>
+          <tbody>
+       <apex:repeat value="{!Supply_Billing__c.Paddy_Purchases__r}" var="purchase">
+           <apex:outputPanel layout="none" rendered="{!purchase.RecordTypeId != $Label.PaddyLooseMaster}">
+              <tr  >
+                  
+                <td style="width: 5%; border: 1px solid #000;">
+                    <div style="text-align: center;"> {!serialNumber}</div>
+                    <div> &nbsp;&nbsp;</div>
+                    <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel> 
+         </td>
+          <td style="width: 23%; border: 1px solid #000;">
+                        <div> {!purchase.Paddy_Type__c}</div>
+                    <div> {!purchase.Farmer_Name__c},{!purchase.Phone__c}</div>
+              <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value="Loose"/>
+</apex:outputPanel>
+
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div style="text-align: right;"> {!FLOOR(purchase.HSN_SAC__c)}</div>
+                    <div> &nbsp;&nbsp;</div>
+                      <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Sold_Bags_1st_Attempt__c}" />
+    </apex:outputText>
+</div>
+                      
+                     <div> &nbsp;&nbsp;</div>
+                      <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                </td>
+                 <td style="width: 10%; border: 1px solid #000;">
+                     <!--<div style="text-align: right;"> {!purchase.Packing__c}</div> -->
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Packing__c}" />
+    </apex:outputText>
+</div>
+                    <div> &nbsp;&nbsp;</div>
+                     <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;">
+                      
+                      <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Sold_Quantity_1st_Attempt__c}" />
+    </apex:outputText>
+</div>
+   <div> &nbsp;&nbsp;</div>
+                      <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="{!purchase.Loose_Quantity_Qtl__c }"/>
+</apex:outputPanel> 
+                      </div>
+                      
+                    </td>
+                  
+                    <td style="width: 10%; border: 1px solid #000;">
+                        
+                         <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Rate_Per_Qtl__c}" />
+    </apex:outputText>
+</div>
+                  <div> &nbsp;&nbsp;</div>
+                
+                        <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="{!purchase.Rate_Per_Qtl__c }"/>
+</apex:outputPanel> 
+                      </div>
+                      
+                    </td>
+                   <td style="width: 8%;border: 1px solid #000;">
+                       <div style="text-align: right;"> Qtl</div>
+                   <div> &nbsp;&nbsp;</div>
+                      
+                        <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="Qtl"/>
+</apex:outputPanel> 
+                      </div>     
+                </td>
+                          <td style="width: 14%;border: 1px solid #000;">
+                             
+                                <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Sold_Paddy_Amount_1st_Attempt__c}" />
+    </apex:outputText>
+</div>
+                    <div> &nbsp;&nbsp;</div>
+                            
+                                    <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="{!purchase.Loose_Amount__c }"/>
+</apex:outputPanel> 
+                      </div>
+                </td>
+              </tr>
+           <apex:variable var="serialNumber" value="{!VALUE(serialNumber) + 1}" />
+           </apex:outputPanel> 
+           <!--UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU-->
+           
+           <!----------------kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk---->
+            </apex:repeat>
+               <apex:repeat value="{!Supply_Billing__c.Paddy_Purchases__r}" var="purchase">
+              <apex:outputPanel layout="none" rendered="{!purchase.RecordTypeId == $Label.PaddyLooseMaster}">
+              <tr  >
+                  
+                <td style="width: 5%; border: 1px solid #000;">
+                    <div style="text-align: center;"> {!serialNumber}</div>
+                    <div> &nbsp;&nbsp;</div>
+                    <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel> 
+         </td>
+          <td style="width: 23%; border: 1px solid #000;">
+                        <div> {!purchase.Paddy_Type__c}</div>
+                    <div> {!purchase.Farmer_Name__c},{!purchase.Phone__c} </div>
+              <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value="Loose"/>
+</apex:outputPanel>
+
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div style="text-align: right;"> {!FLOOR(purchase.HSN_SAC__c)}</div>
+                    <div> &nbsp;&nbsp;</div>
+                      <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Total_Master_Loose_Bags__c}" />
+    </apex:outputText>
+</div>
+                      
+                     <div> &nbsp;&nbsp;</div>
+                      <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                </td>
+                 <td style="width: 10%; border: 1px solid #000;">
+                     <!--<div style="text-align: right;"> {!purchase.Packing__c}</div> -->
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Packing__c}" />
+    </apex:outputText>
+</div>
+                    <div> &nbsp;&nbsp;</div>
+                     <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;">
+                      
+                      <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Master_Loose_Quantity__c}" />
+    </apex:outputText>
+</div>
+   <div> &nbsp;&nbsp;</div>
+                      <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value=""/>
+</apex:outputPanel> 
+                      </div>
+                      
+                    </td>
+                  
+                    <td style="width: 10%; border: 1px solid #000;">
+                        
+                         <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Average_Rate_Per_Qtl__c}" />
+    </apex:outputText>
+</div>
+                  <div> &nbsp;&nbsp;</div>
+                
+                        <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="{!purchase.Average_Rate_Per_Qtl__c }"/>
+</apex:outputPanel> 
+                      </div>
+                      
+                    </td>
+                   <td style="width: 8%;border: 1px solid #000;">
+                       <div style="text-align: right;"> Qtl</div>
+                   <div> &nbsp;&nbsp;</div>
+                      
+                        <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="Qtl"/>
+</apex:outputPanel> 
+                      </div>     
+                </td>
+                          <td style="width: 14%;border: 1px solid #000;">
+                             
+                                <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Master_Loose_Amount__c}" />
+    </apex:outputText>
+</div>
+                    <div> &nbsp;&nbsp;</div>
+                            
+                                    <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value=""/>
+</apex:outputPanel> 
+                      </div>
+                </td>
+              </tr>
+           <apex:variable var="serialNumber" value="{!VALUE(serialNumber) + 1}" />
+           </apex:outputPanel>
+              </apex:repeat>
+              <!--------------------------------------------------------------------------------------------------->
+          <apex:repeat value="{!Supply_Billing__c.Paddy_Purchases1__r}" var="purchase">
+              <tr  >
+                  
+                <td style="width: 5%; border: 1px solid #000;">
+                    <div style="text-align: center;"> {!serialNumber}</div>
+                    <div> &nbsp;&nbsp;</div>
+                    <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                     
+         </td>
+          <td style="width: 23%; border: 1px solid #000;">
+                        <div> {!purchase.Paddy_Type__c}</div>
+                    <div> {!purchase.Farmer_Name__c},{!purchase.Phone__c}</div>
+              <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value="Loose"/>
+</apex:outputPanel>
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div style="text-align: right;"> {!FLOOR(purchase.HSN_SAC__c)}</div>
+                    <div> &nbsp;&nbsp;</div>
+                      <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Sold_Bags_2nd_Attempt__c}" />
+    </apex:outputText>
+</div>
+                     <div> &nbsp;&nbsp;</div>
+                      <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                </td>
+                 <td style="width: 10%; border: 1px solid #000;">
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Packing__c}" />
+    </apex:outputText>
+</div>
+                    <div> &nbsp;&nbsp;</div>
+                     <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;">
+                      
+                      <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Sold_Quantity_2nd_Attempt__c}" />
+    </apex:outputText>
+</div>
+   <div> &nbsp;&nbsp;</div>
+                      
+                       <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="{!purchase.Loose_Quantity_Qtl__c }"/>
+</apex:outputPanel> 
+                      </div>
+                    </td>
+                  
+                    <td style="width: 10%; border: 1px solid #000;">
+                       
+      <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Rate_Per_Qtl__c}" />
+    </apex:outputText>
+</div>
+                  <div> &nbsp;&nbsp;</div>
+                       
+                        <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="{!purchase.Rate_Per_Qtl__c }"/>
+</apex:outputPanel> 
+                      </div>
+                    </td>
+                   <td style="width: 8%;border: 1px solid #000;">
+                       <div style="text-align: right;"> Qtl</div>
+                   <div> &nbsp;&nbsp;</div>
+                      <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="Qtl"/>
+</apex:outputPanel> 
+                      </div>
+                </td>
+                          <td style="width: 14%;border: 1px solid #000;">
+                              
+                               <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!purchase.Sold_Paddy_Amount_2nd_Attempt__c}" />
+    </apex:outputText>
+</div>
+                    <div> &nbsp;&nbsp;</div>
+                              
+                              <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
+    <apex:outputText style="text-align: right;" value="{!purchase.Loose_Amount__c }"/>
+</apex:outputPanel> 
+                      </div>
+                </td>
+              </tr>
+              <apex:variable var="serialNumber" value="{!VALUE(serialNumber) + 1}" />
+            </apex:repeat>
+              <tr  >
+                <td style="width: 8%;border: 1px solid #000;">
+                    <div  style="font-weight: bold;"> </div>
+         </td>
+          <td style="width: 20%;border: 1px solid #000;" >
+                      
+                      <div   style="font-weight: bold;">Sub-Total </div>
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                     <div  style="font-weight: bold;"> </div>
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;">
+                   
+                       <div style="font-weight: bold;text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Supply_Billing__c.Total_Bags__c}" />
+    </apex:outputText>
+</div>
+                      
+                </td>
+                 <td style="width: 10%;border: 1px solid #000;" >
+    
+                    <div   style="font-weight: bold;text-align: right;"> </div>
+                    
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                      <div style="font-weight: bold;text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Supply_Billing__c.Total_Paddy_Quantity__c}" />
+    </apex:outputText>
+</div>
+                     
+                    </td>
+                  
+                    <td style="width: 10%;border: 1px solid #000;" >
+                        <div  style="font-weight: bold;text-align: right;"> </div>
+                      
+                    </td>
+                   <td style="width: 10%;border: 1px solid #000;" >
+                    <div  style="font-weight: bold;text-align: right;">Qtl</div>
+                    
+                </td>
+                <td style="width: 12%;border: 1px solid #000;">
+                   
+                     <div style="font-weight: bold;text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Supply_Billing__c.Amount__c}" />
+    </apex:outputText>
+</div>
+                </td>
+                
+              </tr>
+      <!--------------------------------------------------------------------------------------------------------------->
+                <tr  >
+                  
+                <td style="width: 5%; border: 1px solid #000;">
+                   
+                    <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                     
+         </td>
+          <td style="width: 23%; border: 1px solid #000;">
+                        
+              <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value="Dami"/>
+</apex:outputPanel>
+              <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value="AADATH"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.MANDI_SULK__c !=null}">
+    <apex:outputText style="text-align: right;" value="Mandi Sulk"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.VIKAS_CESS__c !=null}">
+    <apex:outputText style="text-align: right;" value="Vikas Cess"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.SUTALI__c !=null}">
+    <apex:outputText style="text-align: right;" value="Sutli"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.LABOUR_CHARGE_PER_BAG_INR__c !=null}">
+    <apex:outputText style="text-align: right;" value="Labour Charges"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.Other_Expenses__c !=null}">
+    <apex:outputText style="text-align: right;" value="Other Expenses"/>
+</apex:outputPanel> 
+                      </div>
+              <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.Premium_Bonous_Amount__c !=null}">
+    <apex:outputText style="text-align: right;" value="Premium Bonous"/>
+</apex:outputPanel> 
+                      </div>
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                     
+                      <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                     
+                      <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                </td>
+                 <td style="width: 10%; border: 1px solid #000;">
+                     
+                     <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText value=""/>
+</apex:outputPanel>
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;">
+                     <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value=""/>
+</apex:outputPanel> 
+                      </div>
+                    </td>
+                  
+                    <td style="width: 10%; border: 1px solid #000;">
+                    
+                        <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.KACCHI_AADATH__c}"/>
+</apex:outputPanel> 
+                      </div>
+                        <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.AADATH__c}"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.MANDI_SULK__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.MANDI_SULK__c}"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.VIKAS_CESS__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.VIKAS_CESS__c}"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.SUTALI__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.SUTALI__c}"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.LABOUR_CHARGE_PER_BAG_INR__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.LABOUR_CHARGE_PER_BAG_INR__c}"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.Other_Expenses__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.Other_Expenses__c}"/>
+</apex:outputPanel> 
+                      </div>
+                    </td>
+                   <td style="width: 8%;border: 1px solid #000;">
+                       
+                      <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value="%"/>
+</apex:outputPanel> 
+                      </div>
+                       <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value="%"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.MANDI_SULK__c !=null}">
+    <apex:outputText style="text-align: right;" value="%"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.VIKAS_CESS__c !=null}">
+    <apex:outputText style="text-align: right;" value="%"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.SUTALI__c !=null}">
+    <apex:outputText style="text-align: right;" value="lot"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.LABOUR_CHARGE_PER_BAG_INR__c !=null}">
+    <apex:outputText style="text-align: right;" value="Bag"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.Other_Expenses__c !=null}">
+    <apex:outputText style="text-align: right;" value="lot"/>
+</apex:outputPanel> 
+                      </div>
+                       <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.Premium_Bonous_Amount__c !=null}">
+    <apex:outputText style="text-align: right;" value=""/>
+</apex:outputPanel> 
+                      </div>
+                </td>
+                          <td style="width: 14%;border: 1px solid #000;">
+                              
+                                   <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.KACCHI_AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.KACCHI_AADATH_AMOUNT__c}"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.AADATH__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.AADATH_AMOUNT__c}"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.MANDI_SULK__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.MANDI_SULK_AMOUNT__c}"/>
+</apex:outputPanel> 
+                      </div>
+                                 <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.VIKAS_CESS__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.VIKAS_CESS_AMOUNT__c}"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.SUTALI__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.SUTALI__c}"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.LABOUR_CHARGE_PER_BAG_INR__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.TOTAL_BAG_LABOUR_CHARGE__c}"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.Other_Expenses__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.Other_Expenses__c}"/>
+</apex:outputPanel> 
+                      </div>
+                               <div style="text-align: right;">
+                         <apex:outputPanel rendered="{!Supply_Billing__c.Premium_Bonous_Amount__c !=null}">
+    <apex:outputText style="text-align: right;" value="{!Supply_Billing__c.Premium_Bonous_Amount__c}"/>
+</apex:outputPanel> 
+                      </div>
+                </td>
+<!--***************************************************************************************************-->
+                    
+              </tr>
+              
+          </tbody>
+      </table>
+   <div style="text-align: right;"> Grand Total: <Strong> {!Supply_Billing__c.Total_Amount__c}</Strong></div>
+                <div style="text-align: right;">Amount in Words:<Strong><div id="amountInWordsDiv">{!Supply_Billing__c.Amount_in_Words__c}</div> </Strong></div>
+                <p style="text-align: right;">Tax Amount In Words :
+                    <strong>NIL</strong> 
+                </p>
+      <div >
+        <div >
+            
+            
+           
+        </div>
+        <div >
+            
+                
+          
+            
+        </div>
+    </div>
+    
+    
+    </div>
+</div>
+</div>
+  </div>
+  <!--  ..........................................................................-->
+     <div style="display: table; width: 100%; border-collapse: collapse;">
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 1px; border: 1px solid #ccc;">
+                <div style="text-align: left; vertical-align: bottom;" >
+                <p style="text-align: justify;  vertical-align: bottom;">
+                    <strong>Declaration:</strong> We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct
+                </p>
+            </div>
+               
+            </div>
+            <div style="display: table-cell; width: 40%; padding: 1px; border: 1px solid #ccc;">
+            <p style="text-align: left;">
+                    For<strong> {!Supply_Billing__c.Bill_From__c}</strong> 
+                <div style="margin-top: 1px;">
+                <div> &nbsp;&nbsp;</div>
+            <div> &nbsp;&nbsp;</div>
+                    <div> &nbsp;&nbsp;</div>
+                <div style="text-align: right;">Authorised Signatory
+                </div>
+            </div>
+                </p>
+            </div>
+        </div>
+       
+    </div>
+<script type="text/javascript">
+       
+        function getAmountInWords() {
+            const n = {!Supply_Billing__c.Total_Amount__c};
+            
+            console.log('n'+n);
+            if (n < 0) {
+                return false;
+            }
+    
+            if (n === 0) {
+                return 'Zero';
+            }
+    
+            return convertToWords(n).trim() + ' Rupees Only.';
+        }
+
+        function convertToWords(n) {
+           const single_digit = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+        const double_digit = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+        const below_hundred = ['Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    
+        let word = "";
+    
+        if (n < 10) {
+            word += single_digit[n] + ' ';
+        }
+        else if (n < 20) {
+            word += double_digit[n - 10] + ' ';
+        }
+        else if (n < 100) {
+            const tensDigit = Math.floor(n / 10) - 2;
+            const onesDigit = n % 10;
+    
+            word += below_hundred[tensDigit] + ' ';
+    
+            if (onesDigit > 0) {
+                word += single_digit[onesDigit] + ' ';
+            }
+        }
+        else if (n < 1000) {
+            word += single_digit[Math.floor(n / 100)] + ' Hundred ';
+    
+            const remainingDigits = n % 100;
+    
+            if (remainingDigits > 0) {
+                word += 'and ' + convertToWords(remainingDigits);
+            }
+        }
+        else if (n < 100000) { 
+            const thousands = Math.floor(n / 1000);
+            const remaining = n % 1000;
+    
+            if (thousands === 1) {
+                word += 'One Thousand ';
+            } else if (thousands > 1) {
+                word += convertToWords(thousands) + ' Thousand ';
+            }
+    
+            if (remaining > 0) {
+                word += convertToWords(remaining);
+            }
+        }
+        else if (n < 1000000) { // Handle values up to 9 lakh
+            const lakhs = Math.floor(n / 100000);
+            const remaining = n % 100000;
+    
+            if (lakhs === 1) {
+                word += 'One Lakh ';
+            } else if (lakhs > 1) {
+                word += convertToWords(lakhs) + ' Lakhs ';
+            }
+    
+            if (remaining > 0) {
+                word += convertToWords(remaining);
+            }
+        }
+    console.log('Hello get amount in words '+word);
+        return word.trim();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+        const result = getAmountInWords();
+        if (result !== false) {
+            document.getElementById("amountInWordsDiv").textContent = result;
+        }
+    });
+    </script>
+
+
+ 
+</apex:page>

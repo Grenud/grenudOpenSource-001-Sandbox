@@ -111,8 +111,8 @@ public static void testCreateFarmerCredit() {
     Account testAccount2 = new Account(Name = 'Test Account 2', Farmer_Code__c='FRL111');
     insert testAccount2;
 
-    Sale_Invoice__c testInvoice1 = new Sale_Invoice__c(Party_name__c ='FRL345(aman)',Client_farmer__c = testAccount1.Id,Payment_Type__c ='Cheque',Name='101', Total_Invoice_Value__c = 100.0);
-    Sale_Invoice__c testInvoice2 = new Sale_Invoice__c(Party_name__c ='FRL346(pawan)',Client_farmer__c = testAccount2.Id,Payment_Type__c ='Cheque', Name='102', Total_Invoice_Value__c = 200.0);
+    Sale_Invoice__c testInvoice1 = new Sale_Invoice__c(Party_name__c ='FRL345(aman)',Client_farmer__c = testAccount1.Id,Payment_Type__c ='Cheque',Name='101',Balance_Due__c=100, Total_Invoice_Value__c = 100.0);
+    Sale_Invoice__c testInvoice2 = new Sale_Invoice__c(Party_name__c ='FRL346(pawan)',Client_farmer__c = testAccount2.Id,Payment_Type__c ='Cheque', Name='102',Balance_Due__c=200, Total_Invoice_Value__c = 200.0);
     insert testInvoice1;
     insert testInvoice2;
     List<Sale_Invoice__c> invoiceList = new List<Sale_Invoice__c>{ testInvoice1, testInvoice2 };
@@ -125,7 +125,7 @@ public static void testCreateFarmerCredit() {
     Test.stopTest();
 
     // Retrieve the created Farmer Credit records
-    List<Farmer_Credit__c> farmerCredits = [SELECT Id, Sale_Invoice__c, Total_Invoice_Value__c FROM Farmer_Credit__c];
+    List<Farmer_Credit__c> farmerCredits = [SELECT Id, Sale_Invoice__c,Balance_Due__c, Total_Invoice_Value__c FROM Farmer_Credit__c];
 
     // Perform assertions
     System.assertEquals(2, farmerCredits.size());

@@ -1,0 +1,432 @@
+<apex:page standardController="Paddy_Purchase__c" renderAs="pdf">
+    <div style="text-align: center;"><strong>RECEIPT OF GOODS</strong></div>
+    
+            <div style="display: table; width: 100%; border: 1px solid #ccc;">
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;"><div >Bill To</div>
+                    <div ><strong>{!Paddy_Purchase__c.Bill_To__c}</strong></div>
+                        <div >{!Paddy_Purchase__c.Shipping_Address__c}</div>
+                        <div  >MOBILE NO-9027944049,8859888835</div>
+                        <div  >GSTIN/UIN:{!Paddy_Purchase__c.Buyer_GSTIN_UIN__c}</div>
+                        <div >State Name: {!Paddy_Purchase__c.Shipping_State__c}, Code : 09</div>
+                        <div >E-Mail: privatemandiyard@fortuneagromart.com</div></div>
+            <div style="display: table-cell; width: 40%; padding: 5px; border: 1px solid #ccc;">
+                <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>Printed on: <apex:outputText value=" {0,date,dd/MM/yyyy}">
+    <apex:param value="{!TODAY()}" />
+</apex:outputText>
+ </div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>ROG No: <strong>{!FLOOR(Paddy_Purchase__c.Invoice_No__c)}</strong><div> &nbsp;&nbsp;</div></div></div>
+                <div><div ><div> &nbsp;&nbsp;</div>Dated: {!DAY(Paddy_Purchase__c.Date__c)}-{!MONTH(Paddy_Purchase__c.Date__c)}-{!YEAR(Paddy_Purchase__c.Date__c)}</div></div>
+            </div>
+        </div>
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;"><div >Consignee (Ship to)</div>
+                    <div ><strong>{!Paddy_Purchase__c.Bill_To__c}</strong></div>
+                    <div >{!Paddy_Purchase__c.Shipping_Address__c}</div>
+                    <div  >MOBILE NO-9027944049,8859888835</div>
+                    <div  >GSTIN/UIN: {!Paddy_Purchase__c.Buyer_GSTIN_UIN__c}</div>
+                    <div >State Name: {!Paddy_Purchase__c.Shipping_State__c}, Code : 09</div>
+                    <div >E-Mail: privatemandiyard@fortuneagromart.com</div></div>
+            <div style="display: table-cell; width: 40%; padding: 5px;">
+                <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div><div >Mode/Terms of Payment:<div><div> &nbsp;&nbsp;</div> 03 WORKING DAY</div></div></div>
+                
+                <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div><div >Guttka Parchi No: <strong>{!Paddy_Purchase__c.Guttka_Parchi_No__c}</strong></div><div> &nbsp;&nbsp;</div><div> &nbsp;&nbsp;</div></div>
+            </div>
+        </div>
+                <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;">
+                     <div >Supplier (Bill from)</div>
+            <div ><strong>{!Paddy_Purchase__c.Farmer_Name__c}</strong></div>
+            <div  >{!Paddy_Purchase__c.Village__c}</div>
+            <div >State Name: {!Paddy_Purchase__c.Shipping_State__c}, Code: 09</div>
+            <div >Contact: {!Paddy_Purchase__c.Phone__c}</div></div>
+            <div style="display: table-cell; width: 40%; padding: 5px;">
+                <div style="border-bottom: 1px solid #ccc;"><div>Parvesh Parchi No: <strong>{!Paddy_Purchase__c.Name}</strong><div> &nbsp;&nbsp;</div></div></div>
+                
+             <!---   <div>Customer Name:  <strong>{!Paddy_Purchase__c.Bill_To__c}</strong></div> -->
+            </div>
+        </div>
+    </div>
+            <!--    ....................................................................-->
+            
+        
+  
+    
+        
+        <div class="grid-container slds-m-around_medium ">
+           
+           
+    <div class="grid-container slds-m-around_medium ">
+       
+        <div class="grid-row">
+            <div class="grid-cell">
+                <div style="text-align: center;"><strong>Particulars</strong></div>  
+     <table style="border-collapse: collapse; width: 100%; border: 1px solid #000;">
+        
+          <thead>
+              <tr >
+          <th style="border: 1px solid #000;text-align: center;">Sr.No.</th>
+          <th style="border: 1px solid #000;text-align: center;">Description of Goods</th>
+                  
+                  <th style="border: 1px solid #000;text-align: center;">HSN/SAC</th>
+                  <th style="border: 1px solid #000;text-align: center;">Bag</th>
+                  <th style="border: 1px solid #000;text-align: center;">Packing</th>
+                  <th style="border: 1px solid #000;text-align: center;">Quantity</th> 
+                  <th style="border: 1px solid #000;text-align: center;">Rate(INR)</th>
+                  <th style="border: 1px solid #000;text-align: center;">Per</th>
+                  <th style="border: 1px solid #000;text-align: center;">Total (INR)</th>
+              </tr>
+          </thead>
+          <tbody>
+       
+              <tr  >
+                <td style="width: 5%; border: 1px solid #000;">
+                    <div style="text-align: center;"> 1</div>
+                     <div style="text-align: center;"> 2</div>
+                     
+         </td>
+          <td style="width: 23%; border: 1px solid #000;">
+                        <div> {!Paddy_Purchase__c.Paddy_Type__c}</div>
+                     <div> Loose</div>
+                     
+                      
+                      
+        
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div style="text-align: right;"> {!FLOOR(Paddy_Purchase__c.HSN_SAC__c)}</div>
+                     <div style="text-align: right;"> {!FLOOR(Paddy_Purchase__c.HSN_SAC__c)}</div>
+                     
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div style="text-align: right;"> {!FLOOR(Paddy_Purchase__c.Bag__c)}</div>
+                     <div> &nbsp;&nbsp;</div>
+                     
+                   
+                </td>
+                 <td style="width: 10%; border: 1px solid #000;">
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Paddy_Purchase__c.Packing__c}" />
+    </apex:outputText>
+</div>
+
+                     <div> &nbsp;&nbsp;</div>
+                     
+                    
+                </td>
+               <td style="width: 10%; border: 1px solid #000;">
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Paddy_Purchase__c.Paddy_Quantity_Qtl__c}" />
+    </apex:outputText>
+</div>
+
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Paddy_Purchase__c.Loose_Quantity_Qtl__c}" />
+    </apex:outputText>
+</div>
+                     
+                    
+                </td>   
+                  
+           
+                  
+                  
+                    <td style="width: 10%; border: 1px solid #000;">
+                        <div style="text-align: right;"> {!FLOOR(Paddy_Purchase__c.Rate_Per_Qtl__c)}</div>
+                     <div style="text-align: right;"> {!FLOOR(Paddy_Purchase__c.Rate_Per_Qtl__c)}</div>
+                    
+                     
+                    </td>
+                   <td style="width: 10%;border: 1px solid #000;">
+                       <div style="text-align: right;"> Qtl</div>
+                     <div style="text-align: right;"> Qtl</div>
+                     
+                    
+                    
+                </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Paddy_Purchase__c.Amount__c}" />
+    </apex:outputText>
+</div>
+
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Paddy_Purchase__c.Loose_Amount__c}" />
+    </apex:outputText>
+</div>
+                     
+                    
+                </td> 
+                  
+                          
+              </tr>
+
+              <tr >
+                <td style="width: 8%; border: 1px solid #000;">
+                    <div   style="font-weight: bold;"> </div>
+         </td>
+          <td style="width: 20%;border: 1px solid #000;">
+                      
+                      <div   style="font-weight: bold;">Sub Total </div>
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                     <div   style="font-weight: bold;"> </div>
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                    
+                    <div  style="font-weight: bold;"> </div>
+                </td>
+                 <td style="width: 10%;border: 1px solid #000;" >
+    
+                    <div  style="font-weight: bold;"> </div>
+                    
+                </td>
+                  
+                  <td style="width: 10%; border: 1px solid #000;">
+                     <div style="text-align: right;font-weight: bold;">
+    <apex:outputText value="{0, number, 0.00}">
+         <apex:param value="{!Paddy_Purchase__c.Total_Paddy_Quantity__c}" /> 
+    </apex:outputText>
+                      </div></td>
+                  
+                  
+                    <td style="width: 10%;border: 1px solid #000;" >
+                        <div   style="font-weight: bold;"> </div>
+                      
+                    </td>
+                   <td style="width: 10%;border: 1px solid #000;" >
+                    <div  style="font-weight: bold;"></div>
+                    
+                </td>
+                   <td style="width: 10%; border: 1px solid #000;">
+                     <div style="text-align: right;font-weight: bold;">
+    <apex:outputText value="{0, number, 0.00}">
+         <apex:param value="{!Paddy_Purchase__c.Paddy_Amount__c}" /> 
+    </apex:outputText>
+                      </div></td>
+                  
+                
+                
+              </tr>
+              <tr >
+                <td style="width: 8%;border: 1px solid #000;">
+                    <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                    
+         </td>
+          <td style="width: 20%;border: 1px solid #000;" >
+              <div> Bonus (+)</div>
+             <div> Labour Charges (-)</div>
+                     <div> Credit Settelment (-)</div>
+                     <div> Cash Given (-)</div>         
+            
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                      <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                      <div>&nbsp;&nbsp; </div>
+                    
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                    <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                      <div>&nbsp;&nbsp; </div>
+                </td>
+                 <td style="width: 10%;border: 1px solid #000;" >
+    <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                    <div>&nbsp;&nbsp; </div>
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                    <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                     <div> &nbsp;&nbsp;</div>
+                      <div>&nbsp;&nbsp; </div>
+                    </td>
+                                              
+      
+                    <td style="width: 10%;border: 1px solid #000;" >
+                        <div style="text-align: right;">100 </div>
+                        <div style="text-align: right;">{!IF(ISBLANK(Paddy_Purchase__c.LABOUR_CHARGE_PER_BAG_INR__c),0,Paddy_Purchase__c.LABOUR_CHARGE_PER_BAG_INR__c)}</div>
+                        <div style="text-align: right;">{!IF(ISBLANK(Paddy_Purchase__c.Credit_Settlement__c),0,Paddy_Purchase__c.Credit_Settlement__c)}</div>
+                        <div style="text-align: right;">{!IF(ISBLANK(Paddy_Purchase__c.Cash_Deduction__c),0,Paddy_Purchase__c.Cash_Deduction__c)}</div>
+                        
+                        
+                      
+                    </td>
+                   <td style="width: 10%;border: 1px solid #000;" >
+                       <div style="text-align: right;">Qtl</div>
+                     <div style="text-align: right;"> Bag</div>
+                     <div> &nbsp;&nbsp;</div>
+                  <div> &nbsp;&nbsp;</div>
+                    
+                </td>
+                  
+                  
+                <td style="width: 12%;border: 1px solid #000;">
+                    <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+         <apex:param value="{!Paddy_Purchase__c.Bonus_100Rs_Per_Qtl__c}" /> 
+    </apex:outputText></div>
+                     <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+         <apex:param value="{!Paddy_Purchase__c.TOTAL_BAG_LABOUR_CHARGE__c}" /> 
+    </apex:outputText></div>
+                    <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+         <apex:param value="{!Paddy_Purchase__c.Credit_Settlement__c}" /> 
+    </apex:outputText></div>
+                   <div style="text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+         <apex:param value="{!Paddy_Purchase__c.Cash_Deduction__c}" /> 
+    </apex:outputText></div>
+                 </td>
+                
+              </tr>
+              <tr  >
+                <td style="width: 8%;border: 1px solid #000;">
+                    <div  style="font-weight: bold;"> </div>
+         </td>
+          <td style="width: 20%;border: 1px solid #000;" >
+                      
+                      <div   style="font-weight: bold;">Total </div>
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                     <div  style="font-weight: bold;"> </div>
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;">
+                    
+                    <div  style="font-weight: bold;text-align: right;">{!FLOOR(Paddy_Purchase__c.Bag__c)} </div>
+                </td>
+                 <td style="width: 10%;border: 1px solid #000;" >
+    <div style="font-weight: bold;text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Paddy_Purchase__c.Packing__c}" />
+    </apex:outputText>
+        
+</div>
+
+                    
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                     <div style="font-weight: bold;text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Paddy_Purchase__c.Total_Paddy_Quantity__c}" />
+    </apex:outputText>
+        
+</div>
+  </td>
+                  
+                    <td style="width: 10%;border: 1px solid #000;" >
+                        <div  style="font-weight: bold;text-align: right;">{!FLOOR(Paddy_Purchase__c.Rate_Per_Qtl__c)} </div>
+                      
+                    </td>
+                   <td style="width: 10%;border: 1px solid #000;" >
+                    <div  style="font-weight: bold;text-align: right;">Qtl</div>
+                    
+                </td>
+                <td style="width: 12%;border: 1px solid #000;">
+                    <div style="font-weight: bold;text-align: right;">
+    <apex:outputText value="{0, number, 0.00}">
+        <apex:param value="{!Paddy_Purchase__c.Grand_Total__c}" />
+    </apex:outputText>
+        
+</div>
+      </td>
+                
+              </tr>
+      
+          </tbody>
+      </table>
+    <!-------------------------------------------------------------------------------------------------------->
+      <div style="display: table; width: 100%; ">
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 50%; padding: 5px; ">   <div style="text-align: left;" >
+               
+                    <strong>Bank Details:</strong> 
+                
+                <div>Account Holder Name: {!Paddy_Purchase__c.A_C_Holder_Name__c}</div>
+                <div>Bank Name: {!Paddy_Purchase__c.Bank_Name__c}"</div>
+                <div>Account No: {!Paddy_Purchase__c.RE_Account_Number__c}</div>
+                <div>Branch: {!Paddy_Purchase__c.Branch_Name__c} </div> 
+                <div>IFSC Code: {!Paddy_Purchase__c.IFSC_Code__c} </div>
+            </div></div>
+            <div style="display: table-cell; width: 50%; padding: 5px; ">
+                <div style="font-weight: bold;text-align: right;"><p>
+    <apex:outputText value="{0, number, 0.00}">
+      Grand Total:<apex:param value="{!Paddy_Purchase__c.Grand_Total__c}" />
+    </apex:outputText></p>
+        
+</div>
+      <div style="text-align: right;"><p> Amount in Words:  <Strong>{!Paddy_Purchase__c.Amount_in_Words__c} </Strong></p></div>
+     <div style="text-align: right;" >
+               <p style="text-align: right;"> <!-- Tax Amount In Words : -->
+                   <!-- <strong>NIL</strong>  -->
+                </p>
+            </div></div> 
+        </div>
+        
+    </div>
+    <!--------------------------------------------------------------------------------------------------------->
+     
+     
+      <div >
+        <div >
+            
+            
+           
+        </div>
+        <div >
+            
+                
+          
+            
+        </div>
+    </div>
+    
+    
+    </div>
+</div>
+</div>
+  </div>
+  <!--  ..........................................................................-->
+     <div style="display: table; width: 100%; border-collapse: collapse;">
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 70%; padding: 1px; border: 1px solid #ccc;">
+                <div style="text-align: left;" >
+                <p style="text-align: justify;">
+                    <strong>Remarks:</strong> Declaration By signing this document, I hereby declare that my source of income is from agriculture income only which is totally exempt from Income Tax. I have no other than agriculture income.
+                </p>
+            </div>
+                <div> &nbsp;&nbsp;</div>
+                   <div> &nbsp;&nbsp;</div>  
+            <div >Farmer Signatory</div>
+            </div>
+            <div style="display: table-cell; width: 30%; padding: 1px; border: 1px solid #ccc;">
+            <p style="text-align: left;">
+                    For: <strong>{!Paddy_Purchase__c.Bill_To__c}</strong>
+                <div style="margin-top: 1px;">
+                <div> &nbsp;&nbsp;</div>
+            <div> &nbsp;&nbsp;</div>
+                    <div> &nbsp;&nbsp;</div>
+                <div style="text-align: right;">Authorised Signatory
+                </div>
+            </div>
+                </p>
+            </div>
+        </div>
+       
+    </div>
+
+
+ 
+</apex:page>

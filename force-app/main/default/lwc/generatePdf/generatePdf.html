@@ -1,0 +1,88 @@
+<template>
+    <template if:true={FarmerDetails}>
+        <div class='container'>
+    <div class="container" style="background: white;
+    padding: 16px;">
+        <div style="margin-bottom: 50px;">
+            <img src={FortuneLogoUrl} alt="Logo">
+            
+            <div style="display: inline-block;float: right;">
+                <div>Pdf Generation Date #: {TodayDate}</div>
+            </div>
+        </div>
+        <div>
+            <div class="slds-text-align_left"><Strong>Farmer Details</Strong></div>
+            <div style="display: inline-block;">
+                
+                <div>Village: {FarmerDetails.Village__c}</div>
+                <div>Total No. of Invoices: {FarmerDetails.Total_Sale_Invoice_Count__c}</div>
+                <div>Total No. of Purcase: {CreditCount}</div>
+            </div>
+           
+                <div style="display: inline-block;float: right; text-align: right;">
+                <div>Farmer Name: {FarmerDetails.Name}</div>
+                <div>Farmer Phone: {FarmerDetails.Phone} </div>
+            </div>
+           
+
+            
+        </div>
+        <div style="background: #eee;
+        margin: 16px 0px;
+        padding: 8px;">
+            <div  style="display: inline-block"><strong>Sale Invoices</strong></div>
+            <div style="display: inline-block;float: right;"><strong>Amount</strong></div>
+        </div>
+<!--
+        <template iterator:service={formattedSales}>
+            <div key={service.SaleId} style="padding: 8px;">
+                
+                <div style="display: inline-block">{service.Name}</div>
+                <div style="display: inline-block">Date:{service.date}</div>
+                <div style="display: inline-block;float: right;">₹{service.Value}</div>
+            </div>
+            <div if:true={service.last} key={service.ID}  style="padding: 8px;">
+                <div style="display: inline-block;float: right;"><strong>Total Amount:₹{totalAmount} </strong></div>
+            </div>
+        </template>
+        <template iterator:service={formattedCredits}>
+            <div key={service.CreditID} style="padding: 8px;">
+                
+                <div style="display: inline-block">{service.Name}</div>
+                <div style="display: inline-block;float: right;">₹{service.SettelmentAmount}</div>
+                <div style="display: inline-block;float: right;">Created date: {service.date}</div>
+            </div>
+            <div if:true={service.last} key={service.ID}  style="padding: 8px;">
+                <div style="display: inline-block;float: right;"><strong>Total Amount:₹{totalAmount} </strong></div>
+            </div>
+        </template> -->
+        <template for:each={formattedSales} for:item="service">
+            <div key={service.SaleId} style="padding: 8px;">
+                <div style="display: inline-block">Invoice No.:{service.Name}</div>
+                <div style="display: inline-block">Date: {service.date}</div>
+                <div style="display: inline-block; float: right;"> ₹ {service.Value}</div>
+            </div>
+        </template>
+        <div class="slds-text-align_right"> Total Invoice Value: ₹{FarmerDetails.Total_Invoice_Value__c}</div>
+        <div style="background: #eee;
+        margin: 16px 0px;
+        padding: 8px;">
+            <div  style="display: inline-block"><strong>Purchase with their Settement Amount</strong></div>
+            <div style="display: inline-block;float: right;"><strong>Amount</strong></div>
+        </div>
+        <template for:each={formattedCredits} for:item="service">
+            <div key={service.CreditID} style="padding: 8px;">
+                <div style="display: inline-block">{service.Name}</div>
+                <div style="display: inline-block; float: right;">Value ₹{service.SettelmentAmount}</div>
+                <div style="display: inline-block; float: left;">Date: {service.date}</div>
+            </div>
+        </template>
+        <div class="slds-text-align_right">Total Credit Value: ₹{FarmerDetails.Total_Farmer_Credit__c}</div>
+        <div class="slds-text-align_right">Total Credit Setteled: ₹{FarmerDetails.Credit_Settlement__c}</div>
+        <div class="slds-text-align_right"><strong> Remaining Balance: ₹{FarmerDetails.Total_Remaining_Balance__c}</strong></div>
+    </div>
+</div>
+    <lightning-button variant="brand" label="generate pdf" onclick={pdfHandler}></lightning-button>
+</template>
+
+</template>

@@ -1,0 +1,225 @@
+<template>
+    <div class="container">
+    <div style="text-align: center;"><strong>RECEIPT OF GOODS</strong></div>
+    
+            <div style="display: table; width: 100%; border: 1px solid #ccc;">
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;"><div >Bill To</div>
+                    <div ><strong>{SBDetails.Bill_To__c}</strong></div>
+                        <div >{SBDetails.Shipping_Address__c}</div>
+                        <div  >MOBILE NO-9027944049,8859888835</div>
+                        <div  >GSTIN/UIN:{SBDetails.Buyer_GSTIN_UIN__c}</div>
+                        <div >State Name: {SBDetails.Shipping_State__c}, Code : 09</div>
+                        <div >E-Mail: privatemandiyard@fortuneagromart.com</div></div>
+            <div style="display: table-cell; width: 40%; padding: 5px; border: 1px solid #ccc;">
+                <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>Printed on:{TodayDate}
+ </div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>ROG No: <strong>{SBDetails.Invoice_No__c}</strong><div> &nbsp;&nbsp;</div></div></div>
+                <div><div ><div> &nbsp;&nbsp;</div>Dated: </div></div>
+            </div>
+        </div>
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;"><div >Consignee (Ship to)</div>
+                    <div ><strong>{SBDetails.Bill_To__c}</strong></div>
+                    <div >{SBDetails.Shipping_Address__c}</div>
+                    <div  >MOBILE NO-9027944049,8859888835</div>
+                    <div  >GSTIN/UIN: {SBDetails.Buyer_GSTIN_UIN__c}</div>
+                    <div >State Name: {SBDetails.Shipping_State__c}, Code : 09</div>
+                    <div >E-Mail: privatemandiyard@fortuneagromart.com</div></div>
+            <div style="display: table-cell; width: 40%; padding: 5px;">
+                <div style="border-bottom: 1px solid #ccc;"><div >Mode/Terms of Payment<div> &nbsp;&nbsp;</div></div></div>
+                <div style="border-bottom: 1px solid #ccc;">  <div >Buyer's Order No.<div> &nbsp;&nbsp;</div></div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div >Terms of Delivery<div> &nbsp;&nbsp;</div></div></div>
+            </div>
+        </div>
+                <div style="display: table-row;">
+            <div style="display: table-cell; width: 60%; padding: 5px; border: 1px solid #ccc;">
+                     <div >Supplier (Bill from)</div>
+            <div ><strong>{SBDetails.Farmer_Name__c}</strong></div>
+            <div  >{SBDetails.Village__c}</div>
+            <div >State Name: {SBDetails.Shipping_State__c}, Code: 09</div>
+            <div >Contact: {SBDetails.Phone__c}</div></div>
+            <div style="display: table-cell; width: 40%; padding: 5px;">
+                <div style="border-bottom: 1px solid #ccc;"><div>Parvesh Parchi No: <strong>{SBDetails.Name}</strong></div></div>
+                <div style="border-bottom: 1px solid #ccc;"> <div >Destination: {SBDetails.Go__c}</div></div>
+                <div>Customer Name: <strong>{SBDetails.Bill_To__c}</strong></div>
+            </div>
+        </div>
+    </div>
+            <!--    ....................................................................-->
+            
+        
+  
+    
+        
+        <div class="grid-container slds-m-around_medium ">
+           
+           
+    <div class="grid-container slds-m-around_medium ">
+       
+        <div class="grid-row">
+            <div class="grid-cell">
+                <div style="text-align: center;"><strong>Particulars</strong></div>  
+     <table style="border-collapse: collapse; width: 100%; border: 1px solid #000;">
+        
+          <thead>
+              <tr >
+          <th style="border: 1px solid #000;">Sr.No.</th>
+          <th style="border: 1px solid #000;">Description of Goods</th>
+                  
+                  <th style="border: 1px solid #000;">HSN/SAC</th>
+                  <th style="border: 1px solid #000;">Bag</th>
+                  <th style="border: 1px solid #000;">Packing</th>
+                  <th style="border: 1px solid #000;">Quantity</th> 
+                  <th style="border: 1px solid #000;">Rate(INR)</th>
+                  <th style="border: 1px solid #000;">per</th>
+                  <th style="border: 1px solid #000;">Total (INR)</th>
+              </tr>
+          </thead>
+          <tbody>
+       
+              <tr  >
+                <td style="width: 5%; border: 1px solid #000;">
+                    <div> 1</div>
+                     
+                     
+         </td>
+          <td style="width: 23%; border: 1px solid #000;">
+                        <div> A</div>
+        
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      
+                     <div> B</div>
+                     
+                    </td>
+                  <td style="width: 10%; border: 1px solid #000;">
+                      <div>C</div>
+                     
+                     
+                   
+                </td>
+                 <td style="width: 10%; border: 1px solid #000;">
+                     <div> D</div>
+                   
+                    
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;">
+                      <div> E</div>
+   
+                    </td>
+                  
+                    <td style="width: 10%; border: 1px solid #000;">
+                        <div> F</div>
+                
+                    </td>
+                   <td style="width: 10%;border: 1px solid #000;">
+                       <div> Qtl</div>
+                    
+                </td>
+                          <td style="width: 12%;border: 1px solid #000;">
+                              <div> G</div>
+                     
+                </td>
+              </tr>
+
+             
+             
+              <tr  >
+                <td style="width: 8%;border: 1px solid #000;">
+                    <div  style="font-weight: bold;"> </div>
+         </td>
+          <td style="width: 20%;border: 1px solid #000;" >
+                      
+                      <div   style="font-weight: bold;">Total </div>
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                     <div  style="font-weight: bold;"> </div>
+                    </td>
+                  <td style="width: 10%;border: 1px solid #000;">
+                    
+                    <div  style="font-weight: bold;">A</div>
+                </td>
+                 <td style="width: 10%;border: 1px solid #000;" >
+    
+                    <div   style="font-weight: bold;">B</div>
+                    
+                </td>
+                  <td style="width: 10%;border: 1px solid #000;" >
+                     
+                     <div  style="font-weight: bold;">C </div>
+                    </td>
+                  
+                    <td style="width: 10%;border: 1px solid #000;" >
+                        <div  style="font-weight: bold;">D </div>
+                      
+                    </td>
+                   <td style="width: 10%;border: 1px solid #000;" >
+                    <div  style="font-weight: bold;">Qtl</div>
+                    
+                </td>
+                <td style="width: 12%;border: 1px solid #000;">
+                    <div   style="font-weight: bold;">E</div> 
+                </td>
+                
+              </tr>
+      
+          </tbody>
+      </table>
+    
+      <div >
+        <div >
+            
+            
+           
+        </div>
+        <div >
+            
+                
+          
+            
+        </div>
+    </div>
+    
+    
+    </div>
+</div>
+</div>
+  </div>
+  <!--  ..........................................................................-->
+     <div style="display: table; width: 100%; border-collapse: collapse;">
+        <div style="display: table-row;">
+            <div style="display: table-cell; width: 70%; padding: 1px; border: 1px solid #ccc;">
+                <div style="text-align: left;" >
+                <p style="text-align: justify;">
+                    <strong>Declaration:</strong> We declare that this invoice shows the actual price of the 
+                    goods described and that all particulars are true and 
+                    correct.
+                </p>
+            </div>
+                <div> &nbsp;&nbsp;</div>
+                   <div> &nbsp;&nbsp;</div>  
+            <div >Farmer Signatory</div>
+            </div>
+            <div style="display: table-cell; width: 30%; padding: 1px; border: 1px solid #ccc;">
+            <div style="text-align: left;">
+                    For<strong> Fortune Agromart Pvt Ltd</strong> 
+                <div style="margin-top: 1px;">
+                <div> &nbsp;&nbsp;</div>
+                <div> &nbsp;&nbsp;</div>
+                <div> &nbsp;&nbsp;</div>
+                <div style="text-align: right;">Authorised Signatory</div>
+            </div>
+            
+        </div>
+            </div>
+        </div>
+       
+    </div>
+
+</div>
+ 
+     <div class="center-button-container">
+    <lightning-button variant="brand" label="Print" onclick={pdfHandler}></lightning-button>
+</div>
+  </template>

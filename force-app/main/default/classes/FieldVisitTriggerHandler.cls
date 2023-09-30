@@ -74,4 +74,40 @@ public class FieldVisitTriggerHandler
             }
         }
     }
+    
+     public static void preventDuplicateFieldVisit(List<Field_Visit__c> newVisits) {
+        Set<Id> uniqueFarmIds = new Set<Id>();
+        Map<Id, Date> farmIdToLatestDateMap = new Map<Id, Date>();
+        
+        for (Field_Visit__c visit : newVisits) {
+            if (visit.Farm_Name__c != null) {
+                uniqueFarmIds.add(visit.Farm_Name__c);
+            }
+        }
+
+        if (!uniqueFarmIds.isEmpty()) {
+            List<Field_Visit__c> existingVisits = [
+                SELECT Id, CreatedDate, Farm_Name__c 
+                FROM Field_Visit__c 
+                WHERE Farm_Name__c IN :uniqueFarmIds
+            ];
+
+            for (Field_Visit__c existingVisit : existingVisits) {
+                Date existingCreatedDate = existingVisit.CreatedDate.dateGMT(); // Get the date part only, ignoring the time.
+                if (!farmIdToLatestDateMap.containsKey(existingVisit.Farm_Name__c) || existingCreatedDate > farmIdToLatestDateMap.get(existingVisit.Farm_Name__c)) {
+                    farmIdToLatestDateMap.put(existingVisit.Farm_Name__c, existingCreatedDate);
+                }
+            }
+        }
+
+        for (Field_Visit__c newVisit : newVisits) {
+            if (newVisit.Farm_Name__c != null) {
+                Date newCreatedDate = DateTime.now().dateGMT(); // Get the current date part in GMT
+                if (farmIdToLatestDateMap.containsKey(newVisit.Farm_Name__c) &&
+                    newCreatedDate == farmIdToLatestDateMap.get(newVisit.Farm_Name__c)) {
+                    newVisit.addError('Only one Field Visit record is allowed per day for each Farm record.');
+                }
+            }
+        }
+    }
 }

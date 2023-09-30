@@ -26,6 +26,7 @@ public class AccountTriggerHandler {
                     farm.Father_Name__c = accObj.Father_Name__c;
                     farm.Client_Farmer__c = accObj.Id;
                     farm.Village__c = accObj.Village__c;
+                    farm.Phone__c=accObj.Phone;
                     farm.Block__c = accObj.Block__c;
                     farm.District__c = accObj.District__c;
                     farm.Series__c = nextSeries;
@@ -77,6 +78,7 @@ public class AccountTriggerHandler {
                 farm.Farmer_Code__c = accObj.Farmer_Code__c;
                 farm.Client_Farmer__c = accObj.Id;
                 farm.Father_Name__c=accObj.Father_Name__c;
+                farm.Phone__c=accObj.Phone;
                 farm.Village__c = accObj.Village__c;
                 farm.Block__c = accObj.Block__c;
                 farm.District__c = accObj.District__c; 
@@ -149,7 +151,9 @@ public class AccountTriggerHandler {
         Account oldAcc = oldAccountsMap.get(acc.Id);
         if (acc.Village__c != oldAcc.Village__c ||
             acc.Block__c != oldAcc.Block__c ||
-            acc.District__c != oldAcc.District__c) {
+            acc.District__c != oldAcc.District__c ||
+            acc.Phone != oldAcc.Phone) 
+        {
             accountIds.add(acc.Id);
         }
     }
@@ -161,6 +165,7 @@ public class AccountTriggerHandler {
         farm.Village__c = newAccountsMap.get(farm.Client_Farmer__c).Village__c;
         farm.Block__c = newAccountsMap.get(farm.Client_Farmer__c).Block__c;
         farm.District__c =newAccountsMap.get(farm.Client_Farmer__c).District__c;
+        farm.Phone__c =newAccountsMap.get(farm.Client_Farmer__c).Phone;
     }
     update farmsToUpdate;
     

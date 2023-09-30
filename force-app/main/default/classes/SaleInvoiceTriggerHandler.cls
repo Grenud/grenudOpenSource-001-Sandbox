@@ -2,6 +2,7 @@ public class SaleInvoiceTriggerHandler
 {
     Public static void updateTotalInvRollupsum(List<Sale_Invoice__c>FCList){
         Set<string>ClientFarmerId=new Set<String>();
+        
         map<Id, String>CfIdFatherMap=new map<Id, String>();
         map<Id, String>CfIdAadharMap=new map<Id, String>();
         map<Id, String>CfIdPhoneMap=new map<Id, String>();
@@ -340,10 +341,12 @@ public class SaleInvoiceTriggerHandler
             }
         }       
     }
+    
+    // When balance Due Amount do not blank so Farmer Credit should create
     public static void createFarmerCredit(List<Sale_Invoice__c>NewSaleInvList, Map<String, account> NewPlusExisting){
         list<Farmer_credit__c>FCtoInsert=new List<Farmer_Credit__c>();
         for(Sale_Invoice__c SI:NewSaleInvList){
-            if(SI.Payment_Type__c=='Cheque'){
+            if(SI.Balance_Due__c!=NULL && SI.Balance_Due__c!=0){
                 Farmer_credit__c Fc= new Farmer_credit__c();
                 //system.debug('SI.Client_Farmer__c'+SI.Client_Farmer__c);
                 Fc.Client_Farmer__c=NewPlusExisting.get(SI.Farmer_Code__c).id;//SI.Client_Farmer__c;
@@ -351,9 +354,9 @@ public class SaleInvoiceTriggerHandler
                 Fc.Father_Name__c=SI.Father_Name__c;
                 Fc.Sale_Invoice__c=SI.id;
                 Fc.Invoice_Number__c=SI.name;
-                Fc.Balance_Due__c=SI.Total_Invoice_Value__c;
+                Fc.Balance_Due__c=SI.Balance_Due__c;
                 Fc.Phone__c=SI.Phone__c;
-                Fc.Total_Invoice_Value__c=SI.Total_Invoice_Value__c;
+                Fc.Total_Invoice_Value__c=SI.Balance_Due__c;
                 FCtoInsert.add(Fc);
             }
         }
@@ -363,8 +366,12 @@ public class SaleInvoiceTriggerHandler
         }
     }
    ////////////////////////////////////////////////////////////////////////////////////////////
+   //
+  // Requirement changed from dependency on Transaction Type to Balance Due
+  //(Now Farmer Credits are required to be created on the basis of Balance Due Amount)
+    
     public static void createFarmerCreditupdatecashtocheque(List<Sale_Invoice__c>NewSaleInvList,map<id,Sale_Invoice__c>oldmap){
-        list<Farmer_credit__c>FCtoInsert=new List<Farmer_Credit__c>();
+      /*  list<Farmer_credit__c>FCtoInsert=new List<Farmer_Credit__c>();
         for(Sale_Invoice__c SI:NewSaleInvList){
             if(SI.Payment_Type__c=='Cheque'&& oldmap.get(si.id).Payment_Type__c=='Cash'){
                 Farmer_credit__c Fc= new Farmer_credit__c();
@@ -382,6 +389,7 @@ public class SaleInvoiceTriggerHandler
         }
         if(FCtoInsert.size()>0){
             insert FCtoInsert; 
-        }
-    } 
+        } */
+    }
+
 }

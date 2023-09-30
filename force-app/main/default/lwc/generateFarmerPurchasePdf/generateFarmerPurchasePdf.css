@@ -1,0 +1,152 @@
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.invoice-header img {
+    max-height: 100px;
+}
+.invoice-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.Bullet{
+    size:24px;
+    
+}
+.invoice-details p {
+    margin: 0;
+}
+.invoice-items {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+.invoice-items th,
+.invoice-items td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+.invoice-items th {
+    background-color: #f0f0f0;
+}
+.invoice-total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.invoice-total p {
+    margin-right: 10px;
+}
+.table-container {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell {
+    display: table-cell;
+    padding: 10px;
+    border: none;
+}
+.table-PrintDate {
+    text-align: right;
+}
+.grid-container {
+    border: 1px solid #000;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.grid-row {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #000;
+}
+
+.grid-cell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+    border-left: 1px solid #000;
+}
+
+.sub-column {
+    flex: 1;
+    border-bottom: 1px solid #000;
+}
+
+.grid-cell:last-child {
+    border-right: 1px solid #000;
+}
+.left-aligned {
+    text-align: left;
+}
+.right-aligned {
+    text-align: right;
+}
+.Bold{
+    font-weight: bold;
+}
+.row {
+    display: flex;
+    border: 1px solid #ccc; /* Add a border around the entire row */
+}
+
+.column {
+    padding: 10px; /* Add some padding for spacing */
+    border: 1px solid #ccc; /* Add a border around each column */
+}
+
+.column:first-child {
+    flex: 65%; /* Set the width of the first column to 65% */
+}
+
+.column:last-child {
+    flex: 35%; /* Set the width of the second column to 35% */
+}
+.row1 {
+    display: flex;
+    
+}
+
+.column1 {
+    padding: 10px; /* Add some padding for spacing */
+    
+}
+
+.column1:first-child {
+    flex: 65%; /* Set the width of the first column to 65% */
+}
+
+.column1:last-child {
+    flex: 35%; /* Set the width of the second column to 35% */
+}
+.center-button-container {
+    text-align: center;
+}
+.authorised-signatory {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    text-align: right; 
+    background-color: #fff; 
+}
+.sum-row {
+    background-color: #f2f2f2; /* Shaded background color */
+    border-top: 1px solid #ccc; /* Add top border */
+    border-bottom: 1px solid #ccc; /* Add bottom border */
+   
+}
+.bold-text {
+    font-weight: bold;
+}
