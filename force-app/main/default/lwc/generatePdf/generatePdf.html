@@ -16,73 +16,58 @@
                 
                 <div>Village: {FarmerDetails.Village__c}</div>
                 <div>Total No. of Invoices: {FarmerDetails.Total_Sale_Invoice_Count__c}</div>
-                <div>Total No. of Purcase: {CreditCount}</div>
+                <div>Total No. of Purchase: {PurchaseCount}</div>
             </div>
            
                 <div style="display: inline-block;float: right; text-align: right;">
                 <div>Farmer Name: {FarmerDetails.Name}</div>
                 <div>Farmer Phone: {FarmerDetails.Phone} </div>
-            </div>
-           
-
+                </div>
             
         </div>
+
         <div style="background: #eee;
         margin: 16px 0px;
         padding: 8px;">
             <div  style="display: inline-block"><strong>Sale Invoices</strong></div>
             <div style="display: inline-block;float: right;"><strong>Amount</strong></div>
         </div>
-<!--
-        <template iterator:service={formattedSales}>
-            <div key={service.SaleId} style="padding: 8px;">
-                
-                <div style="display: inline-block">{service.Name}</div>
-                <div style="display: inline-block">Date:{service.date}</div>
-                <div style="display: inline-block;float: right;">₹{service.Value}</div>
-            </div>
-            <div if:true={service.last} key={service.ID}  style="padding: 8px;">
-                <div style="display: inline-block;float: right;"><strong>Total Amount:₹{totalAmount} </strong></div>
+
+        <template for:each={formattedSales} for:item="sales">
+            <div key={sales.SaleId} style="padding: 8px;">
+                <div style="display: inline-block">Invoice No: {sales.Name}</div>
+                <div style="display: inline-block; margin-left: 10px;">Date: {sales.date}</div>
+
+                <div style="display: inline-block; float: right;"> ₹ {sales.Value}</div>
             </div>
         </template>
-        <template iterator:service={formattedCredits}>
-            <div key={service.CreditID} style="padding: 8px;">
-                
-                <div style="display: inline-block">{service.Name}</div>
-                <div style="display: inline-block;float: right;">₹{service.SettelmentAmount}</div>
-                <div style="display: inline-block;float: right;">Created date: {service.date}</div>
-            </div>
-            <div if:true={service.last} key={service.ID}  style="padding: 8px;">
-                <div style="display: inline-block;float: right;"><strong>Total Amount:₹{totalAmount} </strong></div>
-            </div>
-        </template> -->
-        <template for:each={formattedSales} for:item="service">
-            <div key={service.SaleId} style="padding: 8px;">
-                <div style="display: inline-block">Invoice No.:{service.Name}</div>
-                <div style="display: inline-block">Date: {service.date}</div>
-                <div style="display: inline-block; float: right;"> ₹ {service.Value}</div>
-            </div>
-        </template>
+
         <div class="slds-text-align_right"> Total Invoice Value: ₹{FarmerDetails.Total_Invoice_Value__c}</div>
         <div style="background: #eee;
-        margin: 16px 0px;
-        padding: 8px;">
+                    margin: 16px 0px;
+                    padding: 8px;">
             <div  style="display: inline-block"><strong>Purchase with their Settement Amount</strong></div>
             <div style="display: inline-block;float: right;"><strong>Amount</strong></div>
         </div>
-        <template for:each={formattedCredits} for:item="service">
-            <div key={service.CreditID} style="padding: 8px;">
-                <div style="display: inline-block">{service.Name}</div>
-                <div style="display: inline-block; float: right;">Value ₹{service.SettelmentAmount}</div>
-                <div style="display: inline-block; float: left;">Date: {service.date}</div>
+        <template for:each={formattedPurchases} for:item="purchases">
+            <div key={purchases.PurchaseID} style="padding: 8px;">
+                <div style="display: inline-block">{purchases.Name}</div>
+                <div style="display: inline-block; float: right;">Value ₹{purchases.SettelmentAmount}</div>
+                <div style="display: inline-block; float: left;">Date: {purchases.date}</div>
             </div>
         </template>
+
         <div class="slds-text-align_right">Total Credit Value: ₹{FarmerDetails.Total_Farmer_Credit__c}</div>
-        <div class="slds-text-align_right">Total Credit Setteled: ₹{FarmerDetails.Credit_Settlement__c}</div>
+        <div class="slds-text-align_right">Total Cash Credit: ₹{FarmerDetails.Total_Cash_Credit__c}</div>
+        <div class="slds-text-align_right">Total Seed Credit: ₹{FarmerDetails.Total_Seeds_Credit__c}</div>
+        <div class="slds-text-align_right">Total Other Credit: ₹{FarmerDetails.Total_Other_Credit__c}</div>
+        <br/>
+        <div class="slds-text-align_right">Total Credit Settled: ₹{FarmerDetails.Credit_Settlement__c}</div>
         <div class="slds-text-align_right"><strong> Remaining Balance: ₹{FarmerDetails.Total_Remaining_Balance__c}</strong></div>
     </div>
 </div>
     <lightning-button variant="brand" label="generate pdf" onclick={pdfHandler}></lightning-button>
+    <lightning-button variant="brand" label="Debugger" onclick={compareAndProcess}></lightning-button>
 </template>
 
 </template>

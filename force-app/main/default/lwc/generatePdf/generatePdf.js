@@ -13,8 +13,9 @@ export default class GeneratePdf extends LightningElement {
     settelmentRecords=[];
     invoiceData=[];
     SaleInvoices=[];
-    Credits=[];
-    CreditCount=0;
+    FarmerCredits=[];
+    Purchases=[];
+    PurchaseCount=0;
     record='a0B0T000003fqLDUAY';
     todayDate='';
     imageUrl = Logo;
@@ -25,8 +26,9 @@ export default class GeneratePdf extends LightningElement {
             if (Array.isArray(data) && data.length > 0) {
             this.FarmerDetails = JSON.parse(JSON.stringify(data[0]));
             this.SaleInvoices=data[0].Sale_Invoices1__r;
-            this.Credits=data[0].Paddy_Purchases__r;
-            this.CreditCount=data[0].Paddy_Purchases__r.length;
+            this.FarmerCredits=data[0].Farmer_Credits__r;
+            this.Purchases=data[0].Paddy_Purchases__r;
+            this.PurchaseCount=data[0].Paddy_Purchases__r.length;
             
             }
 
@@ -34,22 +36,47 @@ export default class GeneratePdf extends LightningElement {
             console.log('An error occurred:', error);
         }
     }
+
     get formattedCredits() {
-        return this.Credits.map(Credit => ({
+        return this.FarmerCredits.map(Credit => ({
             CreditID: Credit.Id,
             Name: Credit.Name,
-            SettelmentAmount: Credit.Credit_Settlement__c,
-            date:new Date(Credit.CreatedDate).toISOString().split('T')[0],
+            BalanceDue : Credit.Balance_Due__c,
+            InvoiceNumber : Credit.Invoice_Number__c
+
         }));
     }
     get formattedSales() {
-        return this.SaleInvoices.map(purchase => ({
-            SaleId: purchase.Id,
-            Name: purchase.Name,
-            date: purchase.Invoice_Date__c,
-            Value:purchase.Total_Invoice_Value__c
+        return this.SaleInvoices.map(sale => ({
+            SaleId: sale.Id,
+            Name: sale.Name,
+            date: sale.Invoice_Date__c,
+            Value:sale.Total_Invoice_Value__c
         }));
     }
+
+    compareAndProcess() {
+        this.formattedSales.forEach(sale => {
+        this.formattedCredits.forEach(credit => {
+                if (credit.InvoiceNumber === sale.Name) {
+                    // Execute your further processing logic here
+                    console.log(`Match found: ${credit.Name} is equal to ${sale.Value}`);
+                    
+                }
+            });
+        });
+    }
+
+
+    get formattedPurchases() {
+        return this.Purchases.map(Purchase => ({
+            PurchaseID: Purchase.Id,
+            Name: Purchase.Name,
+            SettelmentAmount: Purchase.Credit_Settlement__c,
+            date:new Date(Purchase.CreatedDate).toISOString().split('T')[0],
+        }));
+    }
+   
     get TodayDate(){
        var today = new Date();
      var year = today.getFullYear();
