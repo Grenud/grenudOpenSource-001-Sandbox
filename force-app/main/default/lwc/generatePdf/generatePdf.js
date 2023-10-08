@@ -55,18 +55,71 @@ export default class GeneratePdf extends LightningElement {
         }));
     }
 
-    compareAndProcess() {
-        this.formattedSales.forEach(sale => {
-        this.formattedCredits.forEach(credit => {
-                if (credit.InvoiceNumber === sale.Name) {
-                    // Execute your further processing logic here
-                    console.log(`Match found: ${credit.Name} is equal to ${sale.Value}`);
-                    
-                }
-            });
-        });
+    get creditNamesforSale() {
+        return (saleId) => {
+            const creditNames = this.creditNameMap[saleId];
+            return creditNames || ['------'];
+        };
     }
 
+
+   // Modify your JavaScript code
+   compareAndProcess() {
+    const creditNameMap = new Map(); // Use a Map to associate credits with sales
+    const creditBalanceMap = new Map();
+
+    this.formattedSales.forEach(sale => {
+        creditNameMap.set(sale.SaleId, []); // Initialize an empty array for each sale
+       // creditBalanceMap.set(sale.SaleId, []);
+        
+    });
+
+    this.formattedSales.forEach(sale => {
+        this.formattedCredits.forEach(credit => {
+            if (credit.InvoiceNumber === sale.Name) {
+                // Execute your further processing logic here
+                console.log(`Match found: ${credit.CreditID} is equal to ${sale.SaleId}`);
+                const creditNames = creditNameMap.get(sale.SaleId);
+               // const creditBalance = creditBalanceMap.get(sale.SaleId);
+
+                console.log('Credit Names:', creditNames);
+                if (creditNames) {
+                    creditNames.push(credit.Name);
+                }
+                 console.log('Credit Balance :', creditBalance);
+                if(creditBalance){
+                     creditBalance.push(credit.BalanceDue);
+                 }
+            }
+        });
+    });
+       
+
+    console.log('Updated creditNames : ', this.creditNames);
+    this.creditNameMap = creditNameMap;
+
+       // Debuggers to inspect data structures
+       console.log('Formatted Credits:');
+       this.formattedCredits.forEach(credit => console.log(credit));
+       
+       console.log('Formatted Sales:');
+       this.formattedSales.forEach(sale => console.log(sale));
+       
+       console.log('Credit Name Map:');
+       creditNameMap.forEach((value, key) => {
+           console.log(`Key: ${key}, Value: ${value}`);
+       });
+
+       console.log('Credit Balance Map:');
+       creditBalanceMap.forEach((value, key) => {
+           console.log(`Key: ${key}, Value: ${value}`);
+       });
+
+
+}
+
+    
+   
 
     get formattedPurchases() {
         return this.Purchases.map(Purchase => ({

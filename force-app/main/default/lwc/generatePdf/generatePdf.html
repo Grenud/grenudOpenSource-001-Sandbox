@@ -4,10 +4,10 @@
     <div class="container" style="background: white;
     padding: 16px;">
         <div style="margin-bottom: 50px;">
-            <img src={FortuneLogoUrl} alt="Logo">
+            
             
             <div style="display: inline-block;float: right;">
-                <div>Pdf Generation Date #: {TodayDate}</div>
+                <div style="font-size:15px"><strong> Purchase and Settlement Summary Untill : </strong>{TodayDate}</div>
             </div>
         </div>
         <div>
@@ -37,12 +37,12 @@
             <div key={sales.SaleId} style="padding: 8px;">
                 <div style="display: inline-block">Invoice No: {sales.Name}</div>
                 <div style="display: inline-block; margin-left: 10px;">Date: {sales.date}</div>
-
+                <div style="display: inline-block; margin-left: 10px;">Payment: {sales.PaymentType}</div>
                 <div style="display: inline-block; float: right;"> ₹ {sales.Value}</div>
             </div>
         </template>
 
-        <div class="slds-text-align_right"> Total Invoice Value: ₹{FarmerDetails.Total_Invoice_Value__c}</div>
+        <div class="slds-text-align_right"><strong> Total Invoice Value:</strong> ₹{FarmerDetails.Total_Invoice_Value__c}</div>
         <div style="background: #eee;
                     margin: 16px 0px;
                     padding: 8px;">
@@ -51,23 +51,23 @@
         </div>
         <template for:each={formattedPurchases} for:item="purchases">
             <div key={purchases.PurchaseID} style="padding: 8px;">
-                <div style="display: inline-block">{purchases.Name}</div>
+                <div style="display: inline-block; margin-left:3px" >{purchases.Name}</div>
                 <div style="display: inline-block; float: right;">Value ₹{purchases.SettelmentAmount}</div>
-                <div style="display: inline-block; float: left;">Date: {purchases.date}</div>
+                <div style="display: inline-block; float: left;  ">Date: {purchases.date}</div>
+                
             </div>
         </template>
 
-        <div class="slds-text-align_right">Total Credit Value: ₹{FarmerDetails.Total_Farmer_Credit__c}</div>
-        <div class="slds-text-align_right">Total Cash Credit: ₹{FarmerDetails.Total_Cash_Credit__c}</div>
-        <div class="slds-text-align_right">Total Seed Credit: ₹{FarmerDetails.Total_Seeds_Credit__c}</div>
-        <div class="slds-text-align_right">Total Other Credit: ₹{FarmerDetails.Total_Other_Credit__c}</div>
+        <div class="slds-text-align_right" style="margin-bottom:2px">Total Credit Value: ₹{FarmerDetails.Total_Farmer_Credit__c}</div>
+        <div class="slds-text-align_right" style="margin-bottom:2px">Total Cash Credit: ₹{FarmerDetails.Total_Cash_Credit__c}</div>
+        <div class="slds-text-align_right" style="margin-bottom:2px">Total Seed Credit: ₹{FarmerDetails.Total_Seeds_Credit__c}</div>
+        <div class="slds-text-align_right" style="margin-bottom:2px">Total Other Credit: ₹{FarmerDetails.Total_Other_Credit__c}</div>
         <br/>
-        <div class="slds-text-align_right">Total Credit Settled: ₹{FarmerDetails.Credit_Settlement__c}</div>
+        <div class="slds-text-align_right" style="margin-bottom:2px">Total Credit Settled: ₹{FarmerDetails.Credit_Settlement__c}</div>
         <div class="slds-text-align_right"><strong> Remaining Balance: ₹{FarmerDetails.Total_Remaining_Balance__c}</strong></div>
     </div>
 </div>
-    <lightning-button variant="brand" label="generate pdf" onclick={pdfHandler}></lightning-button>
-    <lightning-button variant="brand" label="Debugger" onclick={compareAndProcess}></lightning-button>
+<lightning-button variant="brand" label="Debugger" onclick={compareAndProces}></lightning-button>
 </template>
 
 </template>
