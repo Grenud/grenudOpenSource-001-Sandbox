@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Invoice and Credit Data">
+        <template if:true={invoiceCreditData}>
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Invoice Date</th>
+                        <th>Credit Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={invoiceCreditData} for:item="item">
+                        <tr key={item.saleInvoice.Id}>
+                            <td>{item.saleInvoice.Name}</td>
+                            <td>{item.saleInvoice.InvoiceDate__c}</td>
+                            <td>{creditName}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+    </lightning-card>
+</template>

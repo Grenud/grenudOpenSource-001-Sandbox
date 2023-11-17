@@ -1,0 +1,156 @@
+<template>
+
+<!-- 	<template if:true={isLoading}>
+    <div class="slds-spinner_container">
+        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</template>
+
+Client farmer template-->
+
+	<template if:true={showclientFarmer}>
+
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+	<div class="slds-modal__container slds-box--border">
+
+		<!-- Modal/Popup Box LWC header here -->
+		<header class="slds-modal__header">
+			<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Sampling Client Farmers</h2>
+		</header>
+
+
+		<!-- Modal/Popup Box LWC body starts here -->
+
+		<div class="slds-modal__content slds-p-around_small slds-col slds-size_2-of-3 slds-p-horizontal--small slds-align-middle"
+			id="modal-content-id-2">
+
+		<!-- Search BOX Villages with search icon -->
+			<div class="slds-form-element slds-form-element_horizontal ">
+				 
+				<label class="slds-form-element__label" for="text-input-id-1">
+                    <lightning-icon icon-name="utility:connected_apps" size="small"></lightning-icon>
+                    <strong style="color:#270086; font-size:12px; margin-right:5px;"> Search Village</strong></label>
+								
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left ">
+					<lightning-icon size="x-small" class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" icon-name="utility:search"></lightning-icon>
+                    <lightning-input class="slds-dl_horizontal__detail" id="text-input-id-1" placeholder="Enter Village..." type="text" value={villageName} onchange={handleSearch}></lightning-input>
+				</div>
+			</div>
+		</div>
+
+<!--PAGE SIZE-->                         
+                <div class="slds-list_inline slds-p-bottom_xx-small slds-badge">
+                    <label class="slds-text-color_weak slds-p-horizontal_x-small" for="recordsPerPage">Page Size:</label>
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="recordsPerPage" onchange={handleRecordsPerPage}>
+                            <template for:each={pageSizeOptions} for:item="option">
+                                <option key={option} value={option}>{option}</option>
+                            </template>
+                        </select>
+                    </div>
+					&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+					<div class=" slds-badge_lightest slds-align_absolute-center">
+
+					                <span class="slds-badge">Showing {pageNumber} &nbsp;of&nbsp; {totalPages} &nbsp;&nbsp;Page</span>
+                    </div>
+		<!--Total Records-->
+			<div class="slds-clearfix slds-builder-toolbar__actions">
+                <div class="slds-float_right slds-badge_lightest">
+                    <span class="slds-badge"> Total Records: {totalRecords}</span>
+                </div>
+            </div>	
+                </div>
+            
+
+
+
+<!--LIGHTNING CARD-->
+<lightning-card title="Client Farmers" class = "slds-align--absolute-center">
+   <div if:true={isLoading} style="height: 200px; position:relative">
+      <lightning-spinner variant="base" size="medium"></lightning-spinner>
+    </div>
+    
+    <!-- Using the if:false directive we will conditionaly show/hide the picklists -->
+    <div if:false={isLoading} class="slds-m-around_large">
+<!--LIGHTNING DATA TABLE-->
+<div class="slds-m-around_medium slds-table_col-bordered slds-table_bordered" style={setDatatableHeight}>
+<div class="slds-scrollable" style="height:17rem;width:58rem" tabindex="0">				
+	<lightning-datatable key-field="Id" 
+				                     data={recordsToDisplay} 
+					                 columns={clientFarmerColumns} 
+					                 onrowaction={handleRowAction}
+									 onrowselection={handleRowSelectionFarmers}
+									 show-row-number-column="true">
+	</lightning-datatable>
+</div>
+</div>
+</div>e
+</lightning-card>
+
+
+		<!-- FOOTER CLIENT FARMER TEMPLATE -->
+		<footer class="slds-modal__footer slds-box--border slds-accordion__summary">
+			<!-- PAGINATIONS BUTTONS -->
+			 <div class="slds-align_absolute-center" style="height:5rem">
+                <lightning-button disabled={bDisableFirst} icon-name="utility:jump_to_left" label="First" class="slds-p-horizontal_x-small" alternative-text="first page" onclick={firstPage}></lightning-button>
+                <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>
+                &nbsp;
+
+                &nbsp;
+                <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small" icon-position="right"></lightning-button>
+
+                <lightning-button disabled={bDisableLast} icon-name="utility:jump_to_right" label="Last" alternative-text="last page" onclick={lastPage} icon-position="right"></lightning-button>
+					&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+					&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+
+			
+				<lightning-button class="slds-button__icon--left " label="Add Samples" onclick={createClientFarmerSample} variant="success"></lightning-button>
+
+			</div>
+		</footer>
+	</div>
+ </section>
+</template>
+
+	<!-- Modal to display contacts -->
+
+	<template if:true={showModal}>
+        
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            
+			<div class="slds-modal__container">
+                
+				<header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+						Farm for Client farmer: {selectedClientfarmer.Name}
+					</h2>
+				</header>
+
+				 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<lightning-datatable key-field="Id" 
+										 data={farmsData} 
+										 columns={farmsColumns}
+										 selected-rows={selectedRows}
+								         onrowselection={handleRowSelection}
+										 onrowaction ={hanleRowAction}
+										 show-row-number-column="true"
+										 >
+				    </lightning-datatable>
+				</div>
+
+				<footer class="slds-modal__footer">
+					<lightning-button class="slds-button__icon--left" label="Add Samples" onclick={createSample} variant="success"></lightning-button>
+					<lightning-button label="Close" onclick={closeModal} variant="neutral"></lightning-button>
+				</footer>
+
+			</div>
+        </section>
+	   
+    </template>
+
+</template>

@@ -1,7 +1,16 @@
 <template>
-  <!-- Add your HTML structure and components here -->
-  <div>
-      <h1>Welcome to Farmer Purchase Summary</h1>
-      <!-- Add your UI elements here -->
-  </div>
+    <div class="slds-box">
+        <h2>Paddy Purchase Information for Account: {accountName}</h2>
+        <template if:true={paddyPurchases.data}>
+            <lightning-datatable
+                key-field="Id"
+                data={paddyPurchases.data}
+                columns={columns}
+                hide-checkbox-column="true">
+            </lightning-datatable>
+        </template>
+        <template if:true={paddyPurchases.error}>
+            Error fetching Paddy Purchases: {paddyPurchases.error}
+        </template>
+    </div>
 </template>

@@ -1,0 +1,28 @@
+.slds-modal__container {
+    max-width: 60rem !important;
+    width: 100% !important;
+	max-height: 80rem !important;
+    height: 90% !important;
+}
+
+ .datatable-full-size {
+  width: 100% !important;
+}
+
+.modal__header,
+.modal__footer {
+    height: 100px;
+}
+.modal__container,
+.modal__footer {
+    position: absolute;
+    width: 100%;
+}
+.modal__content {
+    bottom: 100px;
+    top: 100px;
+    overflow-y: auto;
+}
+.modal__footer {
+    bottom: 0;
+}

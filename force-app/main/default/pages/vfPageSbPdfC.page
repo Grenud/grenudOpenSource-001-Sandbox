@@ -1,6 +1,6 @@
 <apex:page standardController="Supply_Billing__c" renderAs="pdf" >
     <apex:variable var="serialNumber" value="1" />
-    <div style="text-align: center;"><strong>Bill of Supply</strong></div>
+    <div style="text-align: center;"><strong>{!Supply_Billing__c.SB_PDF_Heading__c}</strong></div>
     
     
             <div style="display: table; width: 100%; border: 1px solid #ccc;">
@@ -17,7 +17,7 @@
     <apex:param value="{!TODAY()}" />
 </apex:outputText>
  </div></div>
-                <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>Invoice No: <strong>{!FLOOR(Supply_Billing__c.Invoice_No__c)}</strong><div> &nbsp;&nbsp;</div></div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>{!Supply_Billing__c.INV_SB_PDF_Heading__c}: <strong>{!FLOOR(Supply_Billing__c.Invoice_No__c)}</strong><div> &nbsp;&nbsp;</div></div></div>
                 <div><div ><div> &nbsp;&nbsp;</div>Dated: {!DAY(Supply_Billing__c.Date__c)}-{!MONTH(Supply_Billing__c.Date__c)}-{!YEAR(Supply_Billing__c.Date__c)}</div></div>
             </div>
         </div>
@@ -30,10 +30,10 @@
                     <div >State Name: {!Supply_Billing__c.Ship_To_State__c}, Code: {!Supply_Billing__c.State_Code__c}</div>
                   <div ></div></div> 
             <div style="display: table-cell; width: 40%; padding: 5px;">
-                <div style="border-bottom: 1px solid #ccc;"><div >Dispatch Doc No: {!Supply_Billing__c.Dispatch_Doc_No__c}</div></div>
+                <div style="border-bottom: 1px solid #ccc;"><div >G.R No: <strong>{!FLOOR(Supply_Billing__c.G_R_No__c)}</strong></div></div>
                 <div style="border-bottom: 1px solid #ccc;">  <div >Dispatch Through:{!Supply_Billing__c.Dispatch_through__c}</div></div>
                 <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div><div >Vehicle No: {!Supply_Billing__c.Vehicle_No__c}</div></div>
-       <!----         <div style="border-bottom: 1px solid #ccc;"><div >Terms of Delivery<div> &nbsp;&nbsp;</div></div></div>  -->
+                <div style="border-bottom: 1px solid #ccc;"><div >9 R NO:{!Supply_Billing__c.X9_R_NO__c}<div> &nbsp;&nbsp;</div></div></div>
             </div>
         </div>
                 <div style="display: table-row;">
@@ -47,7 +47,7 @@
             <div style="display: table-cell; width: 40%; padding: 5px;">
                 <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div><div>Record No: <strong>{!Supply_Billing__c.Name}</strong></div></div>
                 <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div> <div >Destination: {!Supply_Billing__c.Destination__c}</div></div>
-                <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div> Purchase Order No:<strong> {!FLOOR(Supply_Billing__c.Purchase_Order_No__c)}</strong></div>
+                <div style="border-bottom: 1px solid #ccc;"><div> &nbsp;&nbsp;</div> Purchase Order No:<strong> {!Supply_Billing__c.Purchase_Order_No__c}</strong></div>
                <!-- <div>Customer Name: <strong>{!Supply_Billing__c.Bill_To__c}</strong></div>   -->
             </div>
         </div>
@@ -103,7 +103,7 @@
 
                     </td>
                   <td style="width: 10%; border: 1px solid #000;">
-                      <div style="text-align: right;"> {!FLOOR(purchase.HSN_SAC__c)}</div>
+                      <div style="text-align: right;"> {!FLOOR(Supply_Billing__c.HSN_SAC__c)}</div>
                     <div> &nbsp;&nbsp;</div>
                       <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
     <apex:outputText value=""/>
@@ -218,7 +218,7 @@
 
                     </td>
                   <td style="width: 10%; border: 1px solid #000;">
-                      <div style="text-align: right;"> {!FLOOR(purchase.HSN_SAC__c)}</div>
+                      <div style="text-align: right;"> {!FLOOR(Supply_Billing__c.HSN_SAC__c)}</div>
                     <div> &nbsp;&nbsp;</div>
                       <apex:outputPanel rendered="{!Supply_Billing__c.RecordTypeId == $Label.WithLooseRecordTypeId}">
     <apex:outputText value=""/>

@@ -1,6 +1,5 @@
 @isTest
 public class PaddyPurchasePdfControllerTest {
-
     static testMethod void testGeneratePDF() {
         
  // Create a test General Farmer record
@@ -8,9 +7,9 @@ public class PaddyPurchasePdfControllerTest {
     generalFarmer.Name='Sonu';
     generalFarmer.Farmer_Name__c='Sonu';
     generalFarmer.Father_Name__c='Sonu Father';
-    generalFarmer.Phone__c='9876543';
-    generalFarmer.Village__c='Jhajhr';
-    generalFarmer.Block__c='Jewar';
+    generalFarmer.Phone__c='9876543584';
+    generalFarmer.Village__c='GONDA';
+    generalFarmer.Block__c='ALIGARH';
     generalFarmer.District__c='Gb';
     
     insert generalFarmer;
@@ -29,5 +28,5 @@ public class PaddyPurchasePdfControllerTest {
 
         // Uncomment the following line if you want to test the Blob content of the attachment
         // System.assertEquals('ExpectedBlobContent', attachment.Body.toString());
-    }
+    } 
 }

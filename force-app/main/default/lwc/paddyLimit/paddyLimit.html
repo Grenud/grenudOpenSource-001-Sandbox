@@ -1,5 +1,14 @@
+<template>
 
-    <template>
-        <lightning-progress-bar value="50" size="large"></lightning-progress-bar>
-        <div>Maximum Limit : {Limit}</div>
-    </template>
+    <lightning-card  title="Paddy Purchase Limit Meter">
+        <lightning-progress-bar value={barValue} size="large" variant={progressBarVariant}></lightning-progress-bar>
+        <div style="margin-top:6px ; margin-left:12px"><strong>Approx Remaining Quantity : {FarmerDetails.Approx_Remaining_Paddy__c} QTL</strong></div>
+        <p class="slds-p-horizontal_small"></p>
+        <p slot="footer">
+           <strong>Received Paddy Quantity: {FarmerDetails.Received_Paddy_Qtl__c} QTL</strong>
+            <br/>
+            <strong>Maximum Limit: {FarmerDetails.Paddy_Limit_Qtl__c} QTL</strong>
+        </p>
+        
+    </lightning-card>
+</template>

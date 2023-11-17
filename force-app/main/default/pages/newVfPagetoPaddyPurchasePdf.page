@@ -16,7 +16,13 @@
 </apex:outputText>
  </div></div>
                 <div style="border-bottom: 1px solid #ccc;"><div ><div> &nbsp;&nbsp;</div>ROG No: <strong>{!FLOOR(Paddy_Purchase__c.Invoice_No__c)}</strong><div> &nbsp;&nbsp;</div></div></div>
-                <div><div ><div> &nbsp;&nbsp;</div>Dated: {!DAY(Paddy_Purchase__c.Date__c)}-{!MONTH(Paddy_Purchase__c.Date__c)}-{!YEAR(Paddy_Purchase__c.Date__c)}</div></div>
+               <div><div>Printed on: 
+        <apex:outputText value="{0,date,dd/MM/yyyy, hh:mm a}">
+            <apex:param value="{!Paddy_Purchase__c.Date_Time__c + (5.5/24)}" />
+        </apex:outputText>
+    </div>
+    <div> &nbsp;&nbsp;</div>
+</div>
             </div>
         </div>
         <div style="display: table-row;">
@@ -43,7 +49,7 @@
             <div style="display: table-cell; width: 40%; padding: 5px;">
                 <div style="border-bottom: 1px solid #ccc;"><div>Parvesh Parchi No: <strong>{!Paddy_Purchase__c.Name}</strong><div> &nbsp;&nbsp;</div></div></div>
                 
-             <!---   <div>Customer Name:  <strong>{!Paddy_Purchase__c.Bill_To__c}</strong></div> -->
+                <div>Khasra No:  <strong>{!Paddy_Purchase__c.KHASRA_NO__c}</strong></div> 
             </div>
         </div>
     </div>
@@ -79,7 +85,7 @@
           </thead>
           <tbody>
        
-              <tr  >
+              <tr>
                 <td style="width: 5%; border: 1px solid #000;">
                     <div style="text-align: center;"> 1</div>
                      <div style="text-align: center;"> 2</div>
@@ -256,7 +262,8 @@
       
                     <td style="width: 10%;border: 1px solid #000;" >
                         <div style="text-align: right;">100 </div>
-                        <div style="text-align: right;">{!IF(ISBLANK(Paddy_Purchase__c.LABOUR_CHARGE_PER_BAG_INR__c),0,Paddy_Purchase__c.LABOUR_CHARGE_PER_BAG_INR__c)}</div>
+                        <div style="text-align: right;">8</div>
+                       <!-- <div style="text-align: right;">{!IF(ISBLANK(Paddy_Purchase__c.LABOUR_CHARGE_PER_BAG_INR__c),0,Paddy_Purchase__c.LABOUR_CHARGE_PER_BAG_INR__c)}</div>-->
                         <div style="text-align: right;">{!IF(ISBLANK(Paddy_Purchase__c.Credit_Settlement__c),0,Paddy_Purchase__c.Credit_Settlement__c)}</div>
                         <div style="text-align: right;">{!IF(ISBLANK(Paddy_Purchase__c.Cash_Deduction__c),0,Paddy_Purchase__c.Cash_Deduction__c)}</div>
                         
@@ -354,11 +361,11 @@
                
                     <strong>Bank Details:</strong> 
                 
-                <div>Account Holder Name: {!Paddy_Purchase__c.A_C_Holder_Name__c}</div>
-                <div>Bank Name: {!Paddy_Purchase__c.Bank_Name__c}"</div>
-                <div>Account No: {!Paddy_Purchase__c.RE_Account_Number__c}</div>
-                <div>Branch: {!Paddy_Purchase__c.Branch_Name__c} </div> 
-                <div>IFSC Code: {!Paddy_Purchase__c.IFSC_Code__c} </div>
+             <!--   <div>Account Holder Name: {!Paddy_Purchase__c.A_C_Holder_Name__c}</div> -->
+             <!--  <div>Bank Name: {!Paddy_Purchase__c.Bank_Name__c}"</div>-->
+           <!--    <div>Account No: {!Paddy_Purchase__c.Account_Number__c}</div>-->
+            <!--   <div>Branch: {!Paddy_Purchase__c.Branch_Name__c} </div> -->
+           <!--    <div>IFSC Code: {!Paddy_Purchase__c.IFSC_Code__c} </div>-->
             </div></div>
             <div style="display: table-cell; width: 50%; padding: 5px; ">
                 <div style="font-weight: bold;text-align: right;"><p>

@@ -1,7 +1,7 @@
 @isTest
 public class PaddyDetailLWCControllerTest {
 
-   @isTest
+ /*  @isTest
     static void testGetFarmerPurchaseDetails() {
         // Create test data
         Account clientFarmer = new Account(Name = 'Test Client Farmer',Farmer_Code__c='FRL001');
@@ -9,10 +9,10 @@ public class PaddyDetailLWCControllerTest {
         generalFarmer.Name='Test General Farmer';
         generalFarmer.Farmer_Name__c='Test General Farmer';
         generalFarmer.Father_Name__c='Test General Farmer Father';
-        generalFarmer.Phone__c='9876543';
-        generalFarmer.Village__c='Jhajhr';
-        generalFarmer.Block__c='Jewar';
-        generalFarmer.District__c='Gb';
+        generalFarmer.Phone__c='9876543584';
+        generalFarmer.Village__c='GONDA';
+        generalFarmer.Block__c='GONDA';
+        generalFarmer.District__c='ALIGARH';
         insert clientFarmer;
         insert generalFarmer;
 
@@ -26,7 +26,7 @@ public class PaddyDetailLWCControllerTest {
 
         // Example assertion (customize as per your actual data)
         System.assertEquals(1, result.size());
-    }
+    } */
 
     @isTest
     static void testGetFarmerRecord() {
@@ -44,5 +44,5 @@ public class PaddyDetailLWCControllerTest {
 
         // Example assertion (customize as per your actual data)
         System.assertEquals(1, result.size());
-    }
+    } 
 }

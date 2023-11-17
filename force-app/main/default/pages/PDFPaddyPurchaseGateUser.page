@@ -1,0 +1,70 @@
+<apex:page standardController="Paddy_Purchase__c" renderAs="pdf">
+    <div style="text-align: center; margin-bottom: 10px;"><strong>Gate Entry Slip</strong></div>
+    <div style="text-align: center;"><strong>FORTUNE AGROMART PVT LTD</strong></div>
+    <div style="text-align: center;"><strong>PISAWA-CHANDAUS ROAD, VILLAGE – ELAMPURA, </strong></div>
+    <div style="text-align: center;"><strong>TEHSIL-GABHANA, ALIGARH-202132</strong></div>
+    <div style="text-align: left;"><strong>{!Paddy_Purchase__c.Name}</strong></div>
+    <table style="width: 100%; border-collapse: collapse;background-color: #f5f5f5;">
+    <tr>  
+        <td style="width: 60%; border: 1px solid #ccc; padding: 10px;">
+                <div>Farmer Name: <strong>{!Paddy_Purchase__c.Farmer_Name__c}</strong></div>
+                <hr /> <!-- Horizontal line -->
+                <div>Father Name: <strong>{!Paddy_Purchase__c.Father_Name__c}</strong></div>
+                <hr /> <!-- Horizontal line -->
+                <div>Phone: <strong>{!Paddy_Purchase__c.Phone__c}</strong></div>
+               <hr />
+               <div>Aadhar Card NO: <strong>{!Paddy_Purchase__c.Aadhar_Card_No__c}</strong></div>
+               <hr />
+                <div>Village: <strong>{!Paddy_Purchase__c.Village__c}</strong></div>
+        </td>               
+        <td style="width: 40%; border: 1px solid #ccc; padding: 10px;">
+          <div>Printed on: <apex:outputText value="{0,date,dd/MM/yyyy}">
+                    <apex:param value="{!TODAY()}" />
+                </apex:outputText></div> 
+                <hr/>  
+       <div>Entry Date: 
+          <apex:outputText value="{0,date,dd/MM/yyyy, hh:mm:ss a}">
+            <apex:param value="{!Paddy_Purchase__c.Createddate + (5.5/24)}" />
+          </apex:outputText>
+        </div>
+            <hr /> <!-- Horizontal line -->           
+             <div>Paddy Type: <strong>{!Paddy_Purchase__c.Paddy_Type__c}</strong></div>           
+            <hr />
+            <div>Approx Paddy QTL: <strong>{!FLOOR(Paddy_Purchase__c.Parvesh_Paddy_Qtl__c)}</strong></div>             
+             <hr />                  
+            <div>Parchi Number: <strong>{!Paddy_Purchase__c.Name}</strong></div> 
+            </td>  
+     </tr>
+     
+     
+       <tr>
+         <td style="width: 60%; border: 1px solid #ccc; padding: 10px;">
+              <div>Block: <strong>{!Paddy_Purchase__c.Block__c}</strong></div>
+                
+                <hr /> <!-- Horizontal line -->
+                <div style="text-align: justify;font-size: 18px;">District: <strong>{!Paddy_Purchase__c.District__c}</strong></div>
+      </td>
+               <td style="width: 40%; border: 1px solid #ccc; padding: 10px;">
+                   <div>KHASRA NO: <strong>{!Paddy_Purchase__c.KHASRA_NO__c}</strong></div>
+                    <hr/>
+        <div>Vehicle Type: <strong>{!Paddy_Purchase__c.Vehicle_Type__c}</strong></div>
+          
+            </td>          
+         
+     </tr>
+        
+        <tr>
+         <td style="width: 60%; border: 1px solid #ccc; padding: 10px;">
+               <div>Unloader Person Name: <strong>{!Paddy_Purchase__c.Unload_Person_Name__c}</strong></div>
+           </td>
+         <td style="width: 40%; border: 1px solid #ccc; padding: 10px;">
+              <div>Unloader Person Phone: <strong>{!Paddy_Purchase__c.Unload_Person_Phone__c}</strong></div> 
+              
+         <hr/>
+       <div>Created By: <strong>{!Paddy_Purchase__c.Created_By__c}</strong></div>
+         </td>
+     </tr>
+        
+  </table>  
+    
+</apex:page>

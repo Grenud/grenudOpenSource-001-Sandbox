@@ -144,7 +144,7 @@ public class AccountTriggerHandler {
     }
     }*/
        
-    public static void HandleAfterAdressUpdate(List<account>NewAccountList,Map<Id, Account> newAccountsMap, Map<Id, Account> oldAccountsMap)
+  /*  public static void HandleAfterAdressUpdate(List<account>NewAccountList,Map<Id, Account> newAccountsMap, Map<Id, Account> oldAccountsMap)
     {
          Set<Id> accountIds = new Set<Id>();
     for (Account acc : NewAccountList) {
@@ -192,5 +192,5 @@ public class AccountTriggerHandler {
         fieldVisit.Block__c = newAccountsMap.get(fieldVisit.Client_Farmer__c).Block__c;
     }
     update fieldVisitsToUpdate;
-    }
+    }*/
 }

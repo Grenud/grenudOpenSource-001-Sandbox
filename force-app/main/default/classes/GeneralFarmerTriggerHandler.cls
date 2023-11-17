@@ -33,4 +33,31 @@ public class GeneralFarmerTriggerHandler{
             }
         }
     }
+
+    public static void preventDuplicatePhone(List<General_Farmer__c> newPaddyPurchases) {
+        Set<String> phoneNumbers = new Set<String>();
+
+        // Collect all phone numbers from the incoming records
+        for (General_Farmer__c purchase : newPaddyPurchases) {
+            if (String.isNotBlank(purchase.Phone__c)) {
+                phoneNumbers.add(purchase.Phone__c);
+            }
+        }
+
+        // Query for existing records with the same phone numbers
+        List<General_Farmer__c> existingRecords = [SELECT Id, Phone__c FROM General_Farmer__c WHERE Phone__c IN :phoneNumbers];
+
+        // Map existing phone numbers to their corresponding record Ids
+        Map<String, Id> phoneToRecordIdMap = new Map<String, Id>();
+        for (General_Farmer__c existingRecord : existingRecords) {
+            phoneToRecordIdMap.put(existingRecord.Phone__c, existingRecord.Id);
+        }
+
+        // Check for duplicate phone numbers and prevent record creation or update
+        for (General_Farmer__c purchase : newPaddyPurchases) {
+            if (String.isNotBlank(purchase.Phone__c) && phoneToRecordIdMap.containsKey(purchase.Phone__c)) {
+                purchase.addError('A record with this phone number already exists (Record ID: ' + phoneToRecordIdMap.get(purchase.Phone__c) + ')');
+            }
+        }
+    }
 }

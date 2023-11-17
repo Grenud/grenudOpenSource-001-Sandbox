@@ -7,10 +7,10 @@ public class pdfControllerTest {
         generalFarmer.Name = 'Test General Farmer';
         generalFarmer.Farmer_Name__c = 'Test General Farmer';
         generalFarmer.Father_Name__c = 'Test General Farmer Father';
-        generalFarmer.Phone__c = '9876543';
+        generalFarmer.Phone__c = '9876543584';
         generalFarmer.Village__c = 'Jhajhr';
-        generalFarmer.Block__c = 'Jewar';
-        generalFarmer.District__c = 'Gb';
+        generalFarmer.Block__c = 'GONDA';
+        generalFarmer.District__c = 'ALIGARH';
         insert generalFarmer;
         
         Paddy_Purchase__c paddyPurchase = new Paddy_Purchase__c(General_Farmer__c=generalFarmer.Id);
