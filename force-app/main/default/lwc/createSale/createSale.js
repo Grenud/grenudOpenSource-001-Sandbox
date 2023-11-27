@@ -14,7 +14,7 @@ import createRecordApex from '@salesforce/apex/CreateINvRecord.createRecord';
 import { getRecord } from 'lightning/uiRecordApi';
 import  getStateDistrictPicklist from '@salesforce/apex/StateDistrictPicklist.getStateDistrictPicklist';
 const FIELDS = ['Sale_Invoice__c.Party__r.Name', 'Product_Item__c.Product2.Name'];
-
+//suraj test
 
 export default class CreateSale extends LightningElement {
   //Test Comment 12
