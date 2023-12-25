@@ -16,6 +16,8 @@ import  getStateDistrictPicklist from '@salesforce/apex/StateDistrictPicklist.ge
 const FIELDS = ['Sale_Invoice__c.Party__r.Name', 'Product_Item__c.Product2.Name'];
 // kapil git testing
 
+// Sonu Git Testing
+
 export default class CreateSale extends LightningElement {
   //Test Comment 12
   @api InvData ={Party:"", InvNumber:"", Contact:"", Invdate:"", Phone:"", Email:"", Village:"", Block:"", Taishil:"", State:"", District:""}
