@@ -45,3 +45,39 @@ body {
 .invoice-total p {
     margin-right: 10px;
 }
+
+
+.slds-dropdown_fluid {
+    width: 23.5%;
+}
+
+.slds-dropdown {
+    position: absolute;
+    left: 13.2%;
+    float: left;
+}
+
+.slds-dropdown1 {
+    position: absolute;
+    left: 18%;
+    float: left;
+}
+.slds-dropdown_fluid1 {
+    width: 16%;
+}
+
+.slds-list_vertical-space {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.slds-list_vertical-space li {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd; /* Add a border between list items for better visibility */
+}
+
+.slds-list_vertical-space li:last-child {
+    border-bottom: none; /* Remove border from the last list item */
+}

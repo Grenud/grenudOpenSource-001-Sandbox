@@ -14,7 +14,7 @@ public class FarmTriggerHandler {
         }
     }
 
-    List<Account> clientFarmers = [SELECT Id, Farmer_code__c,Village__c, Block__c, District__c, Father_Name__c FROM Account WHERE Id IN :clientIds];
+    List<Account> clientFarmers = [SELECT Id, Farmer_code__c FROM Account WHERE Id IN :clientIds];
 
     for (Account acc : clientFarmers) {
         clientIdCodeMap.put(acc.Id, acc.Farmer_code__c);
@@ -26,9 +26,7 @@ public class FarmTriggerHandler {
         lastFarm = [
             SELECT Farmer_Code__c, Series__c,client_Farmer__c, Name 
             FROM Farm__c 
-            WHERE client_Farmer__c IN :clientIds 
-            ORDER BY Series__c DESC 
-            LIMIT 1
+            WHERE client_Farmer__c IN :clientIds  ORDER BY Series__c DESC LIMIT 1
         ];
         
     } catch (QueryException e) {
@@ -46,22 +44,18 @@ public class FarmTriggerHandler {
             lastSeriesNumber = newSeriesNumber;
             Account relatedAccount = accountMap.get(farm.client_Farmer__c);
             if (relatedAccount != null) {
-                farm.Village__c = relatedAccount.Village__c;
-                farm.Block__c = relatedAccount.Block__c;
-                farm.District__c = relatedAccount.District__c;
+               // farm.Village__c = relatedAccount.Village__c;
+               // farm.Block__c = relatedAccount.Block__c;
+               // farm.District__c = relatedAccount.District__c;
                 farm.Farmer_Code__c = relatedAccount.Farmer_code__c;
-                farm.Father_Name__c = relatedAccount.Father_Name__c;
-            }
-
+               // farm.Father_Name__c = relatedAccount.Father_Name__c;
+            }             
         }
     }
-}
+} 
 
 private static Integer getLastSeriesNumber(Farm__c farm) {
-    if (farm != null) {
-        String seriesNumberString = farm.Name.substringAfter(farm.Farmer_Code__c + 'F');
-        try {
-            return Integer.valueOf(seriesNumberString);
+    if (farm != null) { String seriesNumberString = farm.Name.substringAfter(farm.Farmer_Code__c + 'F'); try { return Integer.valueOf(seriesNumberString);
         } catch (Exception e) {
             // Handle exception if series number is not a valid integer
         }

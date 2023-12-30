@@ -10,7 +10,7 @@ trigger PaymentTrgger on Payment__c (after insert, after update, after delete, a
         }
         
         if (Trigger.isAfter && Trigger.isDelete) {
-            PaymentTriggerHandler.updateCashCreditAmountRollup(trigger.new);
+            PaymentTriggerHandler.updateCashCreditAmountRollup(trigger.old);
         }
         
         if (Trigger.isAfter && Trigger.isUndelete) {

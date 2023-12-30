@@ -22,7 +22,7 @@ public class AccountTriggerHandlerTest {
         Test.stopTest();
         
         // Verify that farms were created
-        List<Farm__c> farms = [SELECT Name, Farmer_Code__c, Client_Farmer__c, Village__c, Block__c, District__c FROM Farm__c];
+        List<Farm__c> farms = [SELECT Name, Farmer_Code__c, Client_Farmer__c FROM Farm__c];
         System.assertEquals(accounts.size() * 3, farms.size(), 'Incorrect number of farms created');
         
         // Verify farm properties
@@ -30,9 +30,7 @@ public class AccountTriggerHandlerTest {
             System.assertNotEquals(null, farm.Name);
             System.assertNotEquals(null, farm.Farmer_Code__c);
             System.assertNotEquals(null, farm.Client_Farmer__c);
-            System.assertNotEquals(null, farm.Village__c);
-            System.assertNotEquals(null, farm.Block__c);
-            System.assertNotEquals(null, farm.District__c);
+            
         }
     }
     
@@ -52,7 +50,7 @@ public class AccountTriggerHandlerTest {
         Test.stopTest();
         
         // Verify that no farms were created
-        List<Farm__c> farms = [SELECT Name, Farmer_Code__c, Client_Farmer__c, Village__c, Block__c, District__c FROM Farm__c];
+        List<Farm__c> farms = [SELECT Name, Farmer_Code__c, Client_Farmer__c FROM Farm__c];
         System.assertEquals(0, farms.size(), 'Farms should not have been created');
     }
 
@@ -79,7 +77,7 @@ public class AccountTriggerHandlerTest {
         Test.stopTest();
         
         // Verify that the correct number of farms were created
-        List<Farm__c> farms = [SELECT Name, Farmer_Code__c, Client_Farmer__c, Village__c, Block__c, District__c FROM Farm__c];
+        List<Farm__c> farms = [SELECT Name, Farmer_Code__c, Client_Farmer__c FROM Farm__c];
         System.assertEquals(acc.Total_Plot__c, farms.size(), 'Incorrect number of farms created');
         
         // Verify farm properties
@@ -87,13 +85,11 @@ public class AccountTriggerHandlerTest {
             System.assertNotEquals(null, farm.Name);
             System.assertNotEquals(null, farm.Farmer_Code__c);
             System.assertNotEquals(null, farm.Client_Farmer__c);
-            System.assertNotEquals(null, farm.Village__c);
-            System.assertNotEquals(null, farm.Block__c);
-            System.assertNotEquals(null, farm.District__c);
+           
         }
     }
     
-    @IsTest
+ /*   @IsTest
     public static void testHandleAfterAddressUpdate() {
         // Create test data
         Account oldAccount = new Account(Name='Test Account',Farmer_Code__c='FRL001',Village__c = 'OldVillage', Block__c = 'OldBlock', District__c = 'OldDistrict');
@@ -132,9 +128,9 @@ public class AccountTriggerHandlerTest {
         System.assertEquals(newAccount.Block__c, updatedKitSchedule.Block__c);
         System.assertEquals(newAccount.District__c, updatedKitSchedule.District__c);
         
-        Field_Visit__c updatedFieldVisit = [SELECT Village__c, Block__c FROM Field_Visit__c WHERE Id = :fieldVisit.Id];
+       Field_Visit__c updatedFieldVisit = [SELECT Village__c, Block__c FROM Field_Visit__c WHERE Id = :fieldVisit.Id];
         System.assertEquals(newAccount.Village__c, updatedFieldVisit.Village__c);
-        System.assertEquals(newAccount.Block__c, updatedFieldVisit.Block__c);
+        System.assertEquals(newAccount.Block__c, updatedFieldVisit.Block__c); 
     }  
-    
+    */
 }

@@ -23,12 +23,7 @@ public class AccountTriggerHandler {
                     Farm__c farm = new Farm__c();
                     farm.Name = accObj.Farmer_Code__c + 'F' + nextSeries;
                     farm.Farmer_Code__c = accObj.Farmer_Code__c;
-                    farm.Father_Name__c = accObj.Father_Name__c;
                     farm.Client_Farmer__c = accObj.Id;
-                    farm.Village__c = accObj.Village__c;
-                    farm.Phone__c=accObj.Phone;
-                    farm.Block__c = accObj.Block__c;
-                    farm.District__c = accObj.District__c;
                     farm.Series__c = nextSeries;
                     farmsToInsert.add(farm);
                     nextSeries++;
@@ -41,7 +36,7 @@ public class AccountTriggerHandler {
         }
     }
     
-  public static void handleAfterUpdate(List<Account> updatedAccounts, Map<Id, Account> oldAccountsMap) {
+    public static void handleAfterUpdate(List<Account> updatedAccounts, Map<Id, Account> oldAccountsMap) {
     List<Farm__c> farmsToInsert = new List<Farm__c>();
     Map<Id, Decimal> accIdPlotMap = new Map<Id, Decimal>(); 
     Map<Id, Integer> accIdFarmLastNoMap = new Map<Id, Integer>();
@@ -77,11 +72,6 @@ public class AccountTriggerHandler {
                 farm.Series__c = i;
                 farm.Farmer_Code__c = accObj.Farmer_Code__c;
                 farm.Client_Farmer__c = accObj.Id;
-                farm.Father_Name__c=accObj.Father_Name__c;
-                farm.Phone__c=accObj.Phone;
-                farm.Village__c = accObj.Village__c;
-                farm.Block__c = accObj.Block__c;
-                farm.District__c = accObj.District__c; 
                 farmsToInsert.add(farm);
             }
         }
@@ -91,6 +81,20 @@ public class AccountTriggerHandler {
         insert farmsToInsert;
     }
 }
+    
+    public static void createContact(list<account>newAccount)
+    {
+        list<contact>conlist=new list<contact>();
+        for(account acc:newAccount)
+        {
+            contact con = new contact();
+            con.Phone=acc.Phone;
+            con.LastName=acc.Name; 
+            con.AccountId=acc.Id;
+            conlist.add(con);
+        }
+        insert conlist;
+    }
   
   /*  public static void handleAfterUpdate(List<Account> updatedAccounts, Map<Id, Account> oldAccountsMap)
     {

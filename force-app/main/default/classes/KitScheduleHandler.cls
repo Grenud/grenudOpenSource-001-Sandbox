@@ -1,5 +1,5 @@
 public class KitScheduleHandler {
-    public static void updateKitScheduleFields(List<Kit_Schedule__c> KitScheduleList)
+   public static void updateKitScheduleFields(List<Kit_Schedule__c> KitScheduleList)
     {
         Set<Id> farmIds = new Set<Id>();
         for (Kit_Schedule__c KSObj : KitScheduleList) 
@@ -11,7 +11,7 @@ public class KitScheduleHandler {
         }            
         if (!farmIds.isEmpty())
         {
-            Map<Id, Farm__c> farmsMap = new Map<Id, Farm__c>([SELECT Id, Client_Farmer__c,Father_Name__c, Village__c, Block__c,District__c FROM Farm__c WHERE Id IN :farmIds]);
+            Map<Id, Farm__c> farmsMap = new Map<Id, Farm__c>([SELECT Id, Client_Farmer__c FROM Farm__c WHERE Id IN :farmIds]);
             for (Kit_Schedule__c KSObj : KitScheduleList) 
             {
                 if (KSObj.Farm_Name__c != null) 
@@ -20,15 +20,12 @@ public class KitScheduleHandler {
                     if (farm != null) 
                     {
                         KSObj.Client_Farmer__c = farm.Client_Farmer__c;
-                        KSObj.Father_Name__c=farm.Father_Name__c;
-                        KSObj.Village__c = farm.Village__c;
-                        KSObj.Block__c = farm.Block__c;
-                        KSobj.District__c=farm.Block__c;
+                       
                      }
                 }
             }
         }
-    }
+    } 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //Prevent Create Duplicate Kit Schedule
     public static void PreventDuplicateKitSchedule(List<Kit_Schedule__c> KitScheduleList)

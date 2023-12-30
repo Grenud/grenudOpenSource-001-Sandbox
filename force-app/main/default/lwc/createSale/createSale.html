@@ -4,10 +4,7 @@
 		<img src={FortuneLogoUrl} alt="Logo">
 	</div>
 
- <!-- <lightning-combobox label="State" options={StateOptions} value={selectedState} onchange={handleStateChange}></lightning-combobox>
-  <lightning-combobox label="District" options={DistrictOptions} value={selectedDistrict} disabled={isDistrictDisabled}></lightning-combobox>
--->
-
+ 
 
 <div class="slds-grid slds-wrap">
   <div class="slds-col slds-size_12-of-12">
@@ -19,99 +16,340 @@
   </span>
   </div>
  </div>
- <div class="slds-col slds-size_6-of-12 ">
+
+ 
+
+ <!--PARTY-->
+<div class="slds-col slds-size_3-of-12 ">
  <span>
-  <div class="slds-m-around_x-small">   
-            <lightning-record-edit-form object-api-name="Sale_Invoice__c" id="createContactForm" >
-                <lightning-input-field field-name="Party__c" aria-label="Party Name" aria-placeholder="Search Party here.." onchange={handleAccountSelection} required> </lightning-input-field>
+  <div class="slds-m-around_x-small"> 
+        <lightning-input
+            type="search"
+            label="Party"
+            value={searchAccounts}
+            onchange={handleAccountSearch}
+            placeholder="Search Account"
+  ></lightning-input>
+ </div>
+     
+<template if:true={showAccountResults}>
+            <div style="margin-top:-5px" id="listbox-id-5" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+              <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                <template for:each={accounts} for:item="account">
+                <li key={account.Id} role="presentation" class="slds-listbox__item">
+                  <div data-value={account.fields.Id.value} data-label={account.fields.Name.value} onclick={handleAccountSelection} class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                    <span style="pointer-events: none;" class="slds-media__figure slds-listbox__option-icon" >
+                      <span class="slds-icon_container" >
+                          <lightning-icon icon-name={iconName} size="small" alternative-text="icon" ></lightning-icon>  
+                      </span>
+                    </span>
+                    <span style="pointer-events: none;" class="slds-media__body" >
+                      <span  class="slds-listbox__option-text slds-listbox__option-text_entity"> {account.fields.Name.value}</span>
+                    </span>
+
+                  </div>
+                </li>
+                </template>
+              </ul>                       
+ </div>
+ </template>
+  </span>
+</div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+<!--FATHER NAME-->
+ <div class="slds-col slds-size_3-of-12">
+ <span>
+  <div class="slds-m-around_x-small">
+  <lightning-input type="text" disabled = "true" variant="standard" name="FatherName" label="Party Father Name" value={fatherName} ></lightning-input>
+  </div>
+  </span>
+ </div>
+
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+ 
+ <!--FARMER CODE-->
+ <div class="slds-col slds-size_3-of-12">
+ <span>
+  <div class="slds-m-around_x-small">
+  <lightning-input type="text" disabled = "true" variant="standard" name="FarmerCode" label="Party Farmer Code" value={farmerCode} ></lightning-input>
+  </div>
+  </span>
+ </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<!-- New Contact Button -->
+ <div class="slds-col slds-size_3-of-12">
+ <span class = "slds-box--xx-small slds-align--absolute-center"> 
+<div class="slds-m-around_x-small ">
+            <lightning-button label="New Contact" onclick={handleNewContact} disabled={isNewContactButtonDisabled} variant="brand" title="Brand action"></lightning-button>
+        </div>
+  </span>
+ </div>     
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<!-- New Contact Create Form-->
+<template if:true={modalPopupContact}>
+   <section  class="slds-modal slds-fade-in-open slds-modal_medium">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeContactModal}>
+                           <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                        </button>
+                        <h2 class="slds-text-heading_medium slds-hyphenate"> New Contacts </h2>
+                     </header>
+                     <div class="slds-modal__content slds-p-around_medium">
+                       <lightning-record-edit-form object-api-name="Contact" onsubmit={handleContactSubmit} onsuccess={handleContactSuccess}>
+                <lightning-messages>
+                </lightning-messages>
+                <lightning-input-field field-name="Name">
+                </lightning-input-field>
+                <lightning-input-field field-name="AccountId">
+                </lightning-input-field>
+                <lightning-input-field field-name="Email">
+                </lightning-input-field>
+                <lightning-input-field field-name="Phone">
+                </lightning-input-field>
+                <lightning-input-field field-name="Village__c">
+                </lightning-input-field> 
+                <lightning-button class="slds-m-top_small" type="submit" label="Save">
+                </lightning-button>
             </lightning-record-edit-form>
-  </div>
-  </span>
- </div>
- <div class="slds-col slds-size_6-of-12 ">
+                     </div>
+                </div>
+  </section>
+  
+ </template>
+ 
+
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+
+
+ <!--CONTACT PERSON-->
+
+
+<!--
+
+<div class="slds-combobox_container">
+                    <div id="box" class={boxClass} aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                           
+                            <template if:true={isContactSelected}>
+                                <div id="lookup-pill" class="slds-pill-container">
+                                    <lightning-pill class="pillSize" label={selectedContact} name={selectedContact} onremove={handleRemovePill} href={href}>
+                                        <lightning-icon icon-name={iconName} alternative-text="acc" ></lightning-icon>
+                                    </lightning-pill>
+                                </div>
+                            </template>
+                            <template if:false={isContactSelected}>
+                                <div class="slds-p-top_none">
+                                    <lightning-input class={inputClass} type="search" id="input" value={searchContacts}
+                                                     onclick={handleClick} onblur={onBlur} onchange={onChange}
+                                                     variant="label-hidden" autocomplete="off" placeholder={searchPlaceholder}>
+                                    </lightning-input>
+                                </div>
+                          
+                            </template>
+                        </div>
+                        <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                <template for:each={contacts} for:item="record">
+                                    <li key={record.Id} onclick={onSelect} data-id={record.Id} role="presentation" data-name={record.Name}>
+                                        <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option">
+                                            <lightning-icon class="slds-icon slds-icon--small slds-icon-text-default" icon-name={iconName} alternative-text={objName} size="small"></lightning-icon>
+                                            <span class="slds-truncate">{record.Name}</span>
+                                        </span>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+-->
+<div class="slds-col slds-size_4-of-12">
  <span>
-  <div class="slds-m-around_x-small">
-  <lightning-input type="text" variant="standard" name="Invoice Number" label="Invoice Number" required  onchange={InvChnageHandler}></lightning-input>
-  </div>
+   <div class="slds-m-around_x-small">
+        <div class="slds-p-horizontal_small">
+            <lightning-input type="search" label = "Contact" 
+                                           value={searchContacts} 
+                                           onchange={handleContactSearch} 
+                                           placeholder="Search...">
+            </lightning-input>
+        </div>
+        <template if:true={showContactResults}>
+            <div class="slds-p-horizontal_small">
+                <ul class="slds-list_vertical-space">
+                    <template for:each={contacts} for:item="contact">
+                        <li key={contact.Id} onclick={handleContactSelection} data-value={contact.Id} data-label={contact.Name}
+                            class="slds-p-around_small slds-text-link" style="cursor: pointer;">
+                            {contact.Name}
+                        </li>
+                    </template>
+                </ul>
+               
+            </div>
+        </template>
+</div>
   </span>
  </div>
- <div class="slds-col slds-size_6-of-12">
- <span>
-  <div class="slds-m-around_x-small">
-    <lightning-record-edit-form object-api-name="Sale_Invoice__c" id="createContacForm" >
-        <lightning-input-field field-name="Contact_Person__c" aria-label="Contact Person" onfocus={HandleFocus} required onchange={ContacChangetHandler}> </lightning-input-field>
-    </lightning-record-edit-form>
-  </div>
-  </span>
- </div>
- <div class="slds-col slds-size_6-of-12">
- <span>
-  <div class="slds-m-around_x-small">
-  <lightning-input type="date" variant="standard" name="Invoice Date" label="Invoice Date" onchange={InvDateHandler} required></lightning-input>
-  </div>
-  </span>
- </div>
+
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<!--Sale Invoice Data Table-->
+
+<template>
+  <lightning-card title="Sale Invoices related to selected Client Farmer">
+  <lightning-datatable
+      data={data}
+      columns={columns}
+      key-field="Id"
+      onrowselection={getSelectedName}
+  >
+  </lightning-datatable>
+  </lightning-card>
+</template>
+
+
+
+<!--///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+  <!--EMAIL-->
  <div class="slds-col slds-size_4-of-12">
  <span>
   <div class="slds-m-around_x-small">
-  <lightning-input type="text" variant="standard" name="Phone" label="Phone" onchange={PhoneChangeHandler}></lightning-input>
+  <lightning-input type="text" disabled = "true" variant="standard" name="Email" label="Email" value={contactEmail}></lightning-input>
+
   </div>
   </span>
  </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+ <!--PHONE-->
  <div class="slds-col slds-size_4-of-12">
  <span>
   <div class="slds-m-around_x-small">
-  <lightning-input type="text" variant="standard" name="Email" label="Email" onchange={EmailChangeHandler} ></lightning-input>
+  <lightning-input type="text" disabled = "true" variant="standard" name="Phone" label="Phone" value={contactPhone}></lightning-input>
   </div>
   </span>
  </div>
- <div class="slds-col slds-size_4-of-12">
- <span>
-  <div class="slds-m-around_x-small">
-  <lightning-input type="text" variant="standard" name="Village" label="Village" onchange={VillageHandler}></lightning-input>
-  </div>
-  </span>
- </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<!--VILLAGE-->
  <div class="slds-col slds-size_3-of-12">
  <span>
   <div class="slds-m-around_x-small">
-  <lightning-input type="text" variant="standard" name="Block" label="Block" onchange={BlockHandler}></lightning-input>
+  <lightning-input type="text" disabled = "true" variant="standard" name="Village" label="Village" value={contactVillage}></lightning-input>
   </div>
   </span>
  </div>
+ <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+ 
+ <!--BLOCK-->
  <div class="slds-col slds-size_3-of-12">
  <span>
   <div class="slds-m-around_x-small">
-  <lightning-input type="text" variant="standard" name="Tehsil" label="Tehsil" onchange={taisilHanlder} ></lightning-input>
+  <lightning-input type="text" disabled = "true"  variant="standard" name="Block" label="Block" value={contactBlock}></lightning-input>
   </div>
   </span>
  </div>
- <div class="slds-col slds-size_3-of-12">
-  <span>
-    <div class="slds-m-around_x-small">
-      
-           <!-- <lightning-combobox name="District" label="District" value={value}
-                options={DistrictValues.data.values} onchange={handleChange}>
-            </lightning-combobox>    -->  
-        <template if:true={StateValues.data}>
-          <lightning-combobox name="State" label="State" value={value}
-              options={StateValues.data.values} onchange={handleInvoiceBlur}>
-          </lightning-combobox>
-      </template>
-            
-    </div>
+
+ <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+ 
+ <!--TEHSIL-->
+ <div class="slds-col slds-size_2-of-12">
+ <span>
+  <div class="slds-m-around_x-small">
+  <lightning-input type="text" disabled = "true" variant="standard" name="Tehsil" label="Tehsil" value={contactTehsil} ></lightning-input>
+  </div>
   </span>
  </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+  <!-- DISTRICT-->
+ <div class="slds-col slds-size_2-of-12">
+ <span>
+  <div class="slds-m-around_x-small"> 
+  <lightning-input type="text" disabled = "true" variant="standard" name="District" label="District" value={contactDistrict} ></lightning-input>
+  </div>
+  </span>
+ </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+ 
+ <!--STATE-->
+ 
+ <div class="slds-col slds-size_2-of-12">
+ <span>
+  <div class="slds-m-around_x-small"> 
+      <lightning-input type="text" disabled = "true" variant="standard" name="State" label="State" value={contactState} ></lightning-input>
+  </div>
+  </span>
+ </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+  <!--INVOICE DATE
        <div class="slds-col slds-size_3-of-12">
          <span>
-          <div class="slds-m-around_x-small">
-           
-            <lightning-combobox name="District" label="District" value={value}
-            options={filertoption} onchange={DistrictHandler}>
-        </lightning-combobox>  
+          <div class="slds-m-around_x-small">         
+          <lightning-input type="date" variant="standard" name="Invoice Date" label="Invoice Date" onchange={InvDateHandler} required></lightning-input>
           </div>
          </span>
-        </div>
+        </div>-->
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<!-- KIT AREA -->
+ <div class="slds-col slds-size_3-of-12">
+ <span>
+  <div class="slds-m-around_x-small">
+  <lightning-input type="text" variant="standard" name="KitArea" label="Kit Area" onchange={KitAreaHandler}></lightning-input>
+  </div>
+  </span>
+ </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<!-- KIT PLOTS-->
+ <div class="slds-col slds-size_3-of-12">
+ <span>
+  <div class="slds-m-around_x-small">
+  <lightning-input type="text" variant="standard" name="KitPlots" label="Kit Plots" onchange={KitPlotsHandler}></lightning-input>
+  </div>
+  </span>
+ </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<!-- TRANSACTION TYPE-->
+<div class="slds-col slds-size_3-of-12">
+ <span>
+  <div class="slds-m-around_x-small">
+ <lightning-combobox
+                name="selectTransaction"
+                label="Transaction Type"
+                value={selectedTransaction}
+                options={picklistTransaction}
+                onchange={handleTransactionChange}>
+            </lightning-combobox>
+            </div>
+  </span>
+ </div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<!-- PAYMENT TYPE-->
+ <div class="slds-col slds-size_3-of-12">
+ <span>
+  <div class="slds-m-around_x-small">
+ <lightning-combobox
+                name="selectPayment"
+                label="Payment Type"
+                value={selectedPayment}
+                options={picklistPayment}
+                onchange={handlePaymentChange}>
+            </lightning-combobox>
+            </div>
+  </span>
+ </div>
+ <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
 </div>	
 	<table class="slds-m-top_small invoice-items">
 		<thead>

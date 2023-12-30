@@ -1,0 +1,151 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+  color: black;
+  font-family: "Fira Sans", sans-serif;
+  background-color: white;
+}
+
+nav {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 5%;
+  background-color: #8cc099;
+}
+
+nav .heading {
+  font-size: 30px;
+  font-weight: 700;
+  color: white;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li {
+  padding: 8px 15px;
+  border-radius: 10px;
+  transition: 0.2s ease-in;
+}
+
+nav ul li a {
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  color: white;
+}
+
+nav ul li:hover {
+  background-color: green;
+}
+
+nav ul li a:hover {
+  color: white;
+}
+
+nav .sideMenuButton {
+  font-size: 30px;
+  font-weight: bolder;
+  cursor: pointer;
+  display: none;
+}
+
+/* responsive navbar css */
+@media screen and (max-width: 600px) {
+  nav .sideMenuButton {
+      display: flex;
+  }
+
+  nav .navbar {
+      display: none;
+  }
+
+  .sideNavigationBar {
+      display: block !important;
+  }
+}
+
+.sideNavigationBar {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0%;
+  background-color: green;
+  overflow-x: hidden;
+  transition: 0.3s ease-in;
+  padding-top: 60px;
+  display: none;
+}
+
+.sideNavigationBar a {
+  padding: 8px 8px 8px 40px;
+  display: block;
+  font-size: 25px;
+  font-weight: 500;
+  color: #d1d1d1;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.sideNavigationBar a button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: green;
+  font-size: 16px;
+  border-style: none;
+  font-weight: 700;
+}
+
+.sideNavigationBar a:hover {
+  color: white;
+}
+
+.sideNavigationBar .closeButton {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 20px;
+  margin-left: 50px;
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2% 5%;
+}
+
+.line .side1 {
+  padding-right: 50px;
+}
+
+.side1 h1 {
+  font-size: 60px;
+  margin-bottom: 10px;
+  color: green;
+}
+
+.side1 button {
+  width: 200px;
+  padding: 12px 20px;
+  border-radius: 20px;
+  border-style: none;
+  color: black;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}

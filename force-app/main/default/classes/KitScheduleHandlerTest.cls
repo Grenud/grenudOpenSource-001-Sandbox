@@ -33,15 +33,13 @@ public class KitScheduleHandlerTest {
         insert testFieldActivities;
 
         // Verify that the Client Farmer, Village, and Block fields are populated correctly
-        List<Kit_Schedule__c> updatedFieldActivities = [SELECT Id, Client_Farmer__c, Village__c, Block__c, Name
+        List<Kit_Schedule__c> updatedFieldActivities = [SELECT Id, Client_Farmer__c, Name
                                                           FROM Kit_Schedule__c
                                                           WHERE Id IN :testFieldActivities];
 
         for (Kit_Schedule__c fieldActivity : updatedFieldActivities) {
             System.assertEquals(testClientFarmer.Id, fieldActivity.Client_Farmer__c);
-            System.assertEquals(testFarm.Village__c, fieldActivity.Village__c);
-            System.assertEquals(testFarm.Block__c, fieldActivity.Block__c);
-
+            
             // Verify that the Name field is not null or empty
             System.assertNotEquals(null, fieldActivity.Name);
             System.assertNotEquals('', fieldActivity.Name);

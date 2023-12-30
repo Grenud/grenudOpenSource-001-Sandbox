@@ -1,6 +1,7 @@
 trigger AccountTrigger on Account (after insert, after update) {
     if(trigger.isAfter && trigger.IsInsert)
     {
+        AccountTriggerHandler.createContact(trigger.new);
         AccountTriggerHandler.handleAfterInsert(Trigger.new);
     }
     

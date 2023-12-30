@@ -1,0 +1,26 @@
+<template>
+    <h1>Explore the Journey of Your Rice with Fortune Rice Limited 🌾</h1>
+    <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+        <lightning-card title="Trace Your Supply Here!">
+            <!-- Binding the value attribute of the lightning-input to the supplyName property -->
+            <lightning-input label="Enter Supply Bill Number" value={supplyName} onchange={handleInputChange}></lightning-input>
+            <!--<lightning-button label="Get Supply" onclick={getSupply}></lightning-button>-->
+        </lightning-card>
+        
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+    
+        <div>
+            <lightning-datatable data={data}
+                columns={columns}
+                key-field="Name">
+                
+
+            </lightning-datatable>
+        </div>
+    
+
+   <!-- <template if:true={error}>
+        <p>No Records Found!</p>
+    </template> -->
+</template>
