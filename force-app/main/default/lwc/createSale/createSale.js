@@ -14,6 +14,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 //const FIELDS = ['Sale_Invoice__c.Party__r.Name', 'Product_Item__c.Product2.Name'];
 const ACCOUNT_OBJECT = 'Account';
 
+// Sonu Git Testing
+
 export default class CreateSale extends LightningElement {
   
   @track  showtemp1 = true;
